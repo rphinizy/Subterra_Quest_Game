@@ -120,9 +120,6 @@
     <Resource Include="PresentationLayer\Images\background2.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="PresentationLayer\Images\beetle.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="PresentationLayer\Images\inventorybackground.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -132,16 +129,19 @@
     <Resource Include="PresentationLayer\Images\subterramap.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="PresentationLayer\Images\hand.png" />
+    <Resource Include="PresentationLayer\Images\beetle3.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="PresentationLayer\Images\mole.png" />
+    <Resource Include="PresentationLayer\Images\jackalope.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PresentationLayer\Images\mole3.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="PresentationLayer\Images\bunny.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="PresentationLayer\Images\jackalope.jpg" />
+    <Resource Include="PresentationLayer\Images\hand.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

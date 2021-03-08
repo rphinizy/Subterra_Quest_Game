@@ -66,7 +66,7 @@ namespace Subterra_Quest_Game.DataLayer
                 "\nMaybe you should try moving around",
                 Accessible = true,
                 ModifyForm = "Beetle",
-                ModifyFormImg = "Images/beetle.png",
+                ModifyFormImg = "Images/beetle3.png",
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop ="135",
                 ModifyMapLocatorLeft="95"
@@ -78,7 +78,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "It's dark and damp.",
                 Accessible = true,
                 ModifyForm = "Beetle",
-                ModifyFormImg = "Images/beetle.png",
+                ModifyFormImg = "Images/beetle3.png",
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "135",
                 ModifyMapLocatorLeft = "115"
@@ -90,7 +90,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "You see a worm!",
                 Accessible = true,
                 ModifyForm = "Beetle",
-                ModifyFormImg = "Images/beetle.png",
+                ModifyFormImg = "Images/beetle3.png",
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "145",
                 ModifyMapLocatorLeft = "95"
@@ -102,7 +102,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "You see a tunnel to the east and a figure standing on the other side",
                 Accessible = true,
                 ModifyForm = "Beetle",
-                ModifyFormImg = "Images/beetle.png",
+                ModifyFormImg = "Images/beetle3.png",
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "145",
                 ModifyMapLocatorLeft = "115"
@@ -114,7 +114,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "Up ahead to the east is a hooded creature/man...thing?",
                 Accessible = true,
                 ModifyForm = "Beetle",
-                ModifyFormImg = "Images/beetle.png",
+                ModifyFormImg = "Images/beetle3.png",
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "145",
                 ModifyMapLocatorLeft = "140"
@@ -125,7 +125,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "He does not say anything. He does not let you pass either",
                 Accessible = false,
                 ModifyForm = "Beetle",
-                ModifyFormImg = "Images/beetle.png",
+                ModifyFormImg = "Images/beetle3.png",
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "155",
                 ModifyMapLocatorLeft = "178"
@@ -136,7 +136,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "Before you lies a huge city of Mole-People!. There are tunnels leading in every direction.",
                 Accessible = false,
                 ModifyForm = "Mole",
-                ModifyFormImg = "Images/mole.png",
+                ModifyFormImg = "Images/mole3.png",
                 ModifyChamberColor = "DarkGray",
                 ModifyMapLocatorTop = "165",
                 ModifyMapLocatorLeft = "190"
@@ -148,7 +148,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "You see the city exit to the East",
                 Accessible = false,
                 ModifyForm = "Mole",
-                ModifyFormImg = "Images/mole.png",
+                ModifyFormImg = "Images/mole3.png",
                 ModifyChamberColor = "DarkGray",
                 ModifyMapLocatorTop = "170",
                 ModifyMapLocatorLeft = "220"
@@ -159,7 +159,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "You see a small gated entrance with a sign that says Worm Farm",
                 Accessible = false,
                 ModifyForm = "Mole",
-                ModifyFormImg = "Images/mole.png",
+                ModifyFormImg = "Images/mole3.png",
                 ModifyChamberColor = "DarkGray",
                 ModifyMapLocatorTop = "185",
                 ModifyMapLocatorLeft = "195"
@@ -170,7 +170,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "More Mole-People",
                 Accessible = false,
                 ModifyForm = "Mole",
-                ModifyFormImg = "Images/mole.png",
+                ModifyFormImg = "Images/mole3.png",
                 ModifyChamberColor = "DarkGray",
                 ModifyMapLocatorTop = "185",
                 ModifyMapLocatorLeft = "215"
@@ -181,7 +181,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "Up ahead is another Mysterious figure",
                 Accessible = false,
                 ModifyForm = "Mole",
-                ModifyFormImg = "Images/mole.png",
+                ModifyFormImg = "Images/mole3.png",
                 ModifyChamberColor = "DarkGray",
                 ModifyMapLocatorTop = "165",
                 ModifyMapLocatorLeft = "250"
@@ -192,7 +192,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "The creature before you stares blankly before crunching on a carrot",
                 Accessible = false,
                 ModifyForm = "Mole",
-                ModifyFormImg = "Images/mole.png",
+                ModifyFormImg = "Images/mole3.png",
                 ModifyChamberColor = "DarkGray",
                 ModifyMapLocatorTop = "160",
                 ModifyMapLocatorLeft = "270"
@@ -282,7 +282,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "There's a farmer...and he has a rake... He sees you... He moves towards you... he RUNS towards you.",
                 Accessible = false,
                 ModifyForm = "Jackalope",
-                ModifyFormImg = "Images/jackalope.jpg",
+                ModifyFormImg = "Images/jackalope.png",
                 ModifyChamberColor = "DarkSlateGray",
                 ModifyMapLocatorTop = "160",
                 ModifyMapLocatorLeft = "395"
