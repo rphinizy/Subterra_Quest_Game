@@ -1,0 +1,39 @@
+﻿<Window x:Class="Subterra_Quest_Game.PresentationLayer.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Subterra_Quest_Game.PresentationLayer"
+        mc:Ignorable="d"
+        Title="LoginView" Height="375" Width="275" Background="MidnightBlue">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1">
+            <Label 
+                x:Name="player_wins"
+                Margin="10"
+                Content="Location"
+                Foreground="White"
+                FontWeight="Black"
+                FontSize="20"/>
+            
+        </StackPanel>
+
+
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/background3.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        
+
+    </Grid>
+</Window>

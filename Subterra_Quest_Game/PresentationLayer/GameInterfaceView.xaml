@@ -1,0 +1,466 @@
+﻿<Window x:Class="Subterra_Quest_Game.PresentationLayer.GameInterfaceView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Subterra_Quest_Game.PresentationLayer"
+        mc:Ignorable="d"
+        Title="GameInterfaceView" Height="700" Width="1000" Background="MidnightBlue"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="Converter" />
+    </Window.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/background2.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".1*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height=".1*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Height="275" Width="500">
+                <StackPanel.Background>
+                    <ImageBrush ImageSource="Images/subterramap.png" Stretch="Fill"/>
+                </StackPanel.Background>
+                
+            </StackPanel>
+            <!--* GRID ROW 0 -->
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="35,0,0,0">
+
+                    <StackPanel Orientation="Vertical">
+                        <Label x:Name="Name"
+                           Content="Name:"
+                           Margin="0,20,0,0"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center"
+                           Foreground="White"
+                           FontSize="14"
+                           FontFamily="Comic Sans MS">
+                        </Label>
+
+                        <Label x:Name="nameBox"
+                             Content="{Binding Player.Name}"
+                             FontSize="14"
+                             Foreground="Black"
+                               Background="white"
+                             FontFamily="Comic Sans MS"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                           >
+                        </Label>
+                    </StackPanel>
+
+                    <Border BorderThickness="5" 
+                        Margin="0,5,0,0"
+                        BorderBrush="SaddleBrown"
+                        Width="100"
+                        Height="100"
+                        Background="RosyBrown"
+                        CornerRadius="8">
+                        <Image Source="{Binding Player.FormImg}" 
+                           Margin="5,5,5,5"
+                       Stretch="Uniform" 
+                       MaxHeight="95">
+                        </Image>
+                    </Border>
+                    <TextBox x:Name="formName"
+                         Text="{Binding Player.Form}"
+                         Margin="0,5,0,0"
+                         HorizontalAlignment="Center"
+                         FontSize="18"
+                         FontFamily="Comic Sans MS">
+                    </TextBox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="2">
+
+            </StackPanel>
+
+            <!--* GRID ROW 1 -->
+            <Canvas Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Canvas.Top="{Binding CurrentLocation.ModifyMapLocatorTop}" Canvas.Left="{Binding CurrentLocation.ModifyMapLocatorLeft}"
+                        Height="10"
+                        Width="10"
+                        Background="Green">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Stroke="DarkBlue" StrokeThickness="1">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush>
+                                            <GradientStop Offset="0"  
+                                            Color="LightGreen" />
+                                            <GradientStop Offset=".8"  
+                                            Color="DarkGreen" />
+                                            <RadialGradientBrush.Transform>
+                                                <TransformGroup>
+                                                    <ScaleTransform ScaleY="0.65" />
+                                                </TransformGroup>
+                                            </RadialGradientBrush.Transform>
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <ContentPresenter HorizontalAlignment="Center"  
+                                    VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Canvas>
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" HorizontalAlignment="center" VerticalAlignment="Bottom" Margin="0,0,0,5">
+
+                <Border x:Name="StartBorder" BorderBrush="Black" BorderThickness="3" CornerRadius="8">
+                    <Button
+                    x:Name="StartButton"
+                    Content="Enter Underground"
+                    Width="110"
+                    Height="30"
+                    Background="LavenderBlush" Click="Start_Click">
+                    </Button>
+                </Border>
+                
+                
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" Margin="0,10,0,5">
+                <Border BorderBrush="SaddleBrown" BorderThickness="7" CornerRadius="8">
+                    <TextBox x:Name="questText" TextAlignment="Center"
+                    Background="{Binding CurrentLocation.ModifyChamberColor}"
+                    Foreground="White"
+                    Text="{Binding CurrentLocation.Description, Mode=OneWay}"
+                    Height="200"
+                    FontSize="16">
+                    </TextBox>
+                </Border>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,10,0">
+
+                    <Label x:Name ="Health"
+                           Margin="0,0,0,0"
+                           Content="HP"
+                           Foreground="white"
+                           FontSize="18"
+                           FontFamily="Comic Sans MS"
+                           HorizontalAlignment="Center">
+                    </Label>
+                    <TextBox x:Name="healthBox"
+                             FontSize="18"
+                             FontFamily="Comic Sans MS"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Width="37"
+                             Text="{Binding Player.Health}">
+                    </TextBox>
+                    <Label x:Name ="Defence"
+                           Margin="20,0,0,0"
+                           Content="DEF"
+                           Foreground="white"
+                           FontSize="18"
+                           FontFamily="Comic Sans MS"
+                           HorizontalAlignment="Right">
+                    </Label>
+                    <TextBox x:Name="defBox"
+                             FontSize="18"
+                             FontFamily="Comic Sans MS"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Width="37"
+                             Text="{Binding Player.Defense}"
+                       >
+                    </TextBox>
+                    <Label x:Name ="Strength"
+                           Margin="20,0,0,0"
+                           Content="STR"
+                           Foreground="white"
+                           FontSize="18"
+                           FontFamily="Comic Sans MS"
+                           HorizontalAlignment="Left">
+                    </Label>
+                    <TextBox x:Name="strBox"
+                             HorizontalAlignment="Center"
+                             FontSize="18"
+                             FontFamily="Comic Sans MS"
+                             VerticalAlignment="Center"
+                             Width="37"
+                             Text="{Binding Player.Strength}">
+                    </TextBox>
+                    <Label x:Name ="Experience"
+                           Margin="20,0,0,0"
+                           Content="EXP"
+                           Foreground="white"
+                           FontSize="18"
+                           FontFamily="Comic Sans MS"
+                           HorizontalAlignment="Right">
+                    </Label>
+                    <TextBox  x:Name="ExperienceBox"
+                             FontSize="18" 
+                             FontFamily="Comic Sans MS"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Width="37"
+                             Text="{Binding Player.Experience}">
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="63,0,0,0">
+                    <Button x:Name="addHP"
+                            Content=" + "
+                            FontSize="10"
+                            FontWeight="ExtraBold"
+                            Height="25"
+                            Width="25"
+                            Margin="0,0,50,0"
+                            Click="HPStatButtonClick">
+                    </Button>
+                    <Button x:Name="addDEF"
+                            Content=" + "
+                            FontSize="10"
+                            FontWeight="ExtraBold"
+                            Height="25"
+                            Width="25"
+                            Margin="27,0,0,0"
+                            Click="DEFStatButtonClick">
+                    </Button>
+                    <Button x:Name="addSTR"
+                            Content=" + "
+                            FontSize="10"
+                            FontWeight="ExtraBold"
+                            Height="25"
+                            Width="25"
+                            Margin="77,0,0,0"
+                            Click="STRStatButtonClick">
+                    </Button>
+                    <Label x:Name ="Point"
+                           Margin="25,0,0,0"
+                           Content="Points"
+                           Foreground="white"
+                           FontSize="14"
+                           FontFamily="Comic Sans MS"
+                           HorizontalAlignment="Right">
+                    </Label>
+                    <TextBox x:Name="pointBox"
+                              Margin="2,0,0,0"
+                             FontSize="14"
+                             FontFamily="Comic Sans MS"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             TextAlignment="Center"
+                             Width="25"
+                             Text="{Binding Player.StatPoints}"
+                       >
+                    </TextBox>
+
+                </StackPanel>
+            </StackPanel>
+            <Border BorderBrush="SaddleBrown" BorderThickness="7" Grid.Column="0" Grid.Row="2" Margin="35,5,5,10" CornerRadius="8">
+                <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Vertical">
+                    <StackPanel.Background>
+                        <ImageBrush ImageSource="Images/inventorybackground.jpg" Stretch="UniformToFill"/>
+                    </StackPanel.Background>
+                    <StackPanel Orientation="Vertical">
+                        <Label HorizontalAlignment="Center"
+                           Margin="0,5,0,20"
+                           Content="Inventory"
+                           Foreground="White"
+                           FontSize="25"
+                           FontFamily="Comic Sans MS">
+                        </Label>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0" HorizontalAlignment="Center"  MaxHeight="50">
+                            <Image x:Name="slot1"
+                        Source="Images/inventoryempty.png">
+                            </Image>
+                            <Image x:Name="slot2"
+                        Source="Images/inventoryempty.png">
+                            </Image>
+                            <Image x:Name="slot3"
+                        Source="Images/inventoryempty.png">
+                            </Image>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10,18,10,18" HorizontalAlignment="Center" MaxHeight="50">
+                            <Image x:Name="slot4"
+                        Source="Images/inventoryempty.png">
+                            </Image>
+                            <Image x:Name="slot5"
+                        Source="Images/inventoryempty.png">
+                            </Image>
+                            <Image x:Name="slot6"
+                        Source="Images/inventoryempty.png">
+                            </Image>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,22" HorizontalAlignment="Center" MaxHeight="50">
+                            <Image x:Name="slot7"
+                        Source="Images/inventoryempty.png">
+                            </Image>
+                            <Image x:Name="slot8"
+                        Source="Images/inventoryempty.png">
+                            </Image>
+                            <Image x:Name="slot9"
+                        Source="Images/inventoryempty.png">
+                            </Image>
+                        </StackPanel>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="SaddleBrown" BorderThickness="7" Grid.Column="2" Grid.Row="2" Margin="5,5,35,10" CornerRadius="8">
+                <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Vertical">
+                    <StackPanel.Background>
+                        <ImageBrush ImageSource="Images/inventorybackground.jpg" Stretch="UniformToFill"/>
+                    </StackPanel.Background>
+                    <Label 
+                    x:Name="navigation"
+                    Content="Navigation"
+                    Foreground="White"
+                    FontSize="25"
+                    HorizontalAlignment="Center"
+                    FontFamily="Comic Sans MS"/>
+                    <Button x:Name="north" Width="40" Content="N" Height="40" Margin="0,10,0,0" Click="North_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Ellipse Stroke="BurlyWood" StrokeThickness="4">
+                                        <Ellipse.Fill>
+                                            <RadialGradientBrush>
+                                                <GradientStop Offset="1"  
+                                            Color="LightSteelBlue" />
+                                                <GradientStop Offset="0"  
+                                            Color="White" />
+                                                <RadialGradientBrush.Transform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleY="0.65" />
+                                                    </TransformGroup>
+                                                </RadialGradientBrush.Transform>
+                                            </RadialGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <ContentPresenter HorizontalAlignment="Center"  
+                                    VerticalAlignment="Center"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="west" Width="40" Content="W" Height="40" Margin="0,0,15,0" Click="West_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Ellipse Stroke="BurlyWood" StrokeThickness="4">
+                                            <Ellipse.Fill>
+                                                <RadialGradientBrush>
+                                                    <GradientStop Offset="1"  
+                                            Color="LightSteelBlue" />
+                                                    <GradientStop Offset="0"  
+                                            Color="White" />
+                                                    <RadialGradientBrush.Transform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform ScaleY="0.65" />
+                                                        </TransformGroup>
+                                                    </RadialGradientBrush.Transform>
+                                                </RadialGradientBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <ContentPresenter HorizontalAlignment="Center"  
+                                    VerticalAlignment="Center"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button x:Name="east" Width="40" Content="E" Height="40" Margin="15,0,0,0" Click="East_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Ellipse Stroke="BurlyWood" StrokeThickness="4">
+                                            <Ellipse.Fill>
+                                                <RadialGradientBrush>
+                                                    <GradientStop Offset="1"  
+                                            Color="LightSteelBlue" />
+                                                    <GradientStop Offset="0"  
+                                            Color="White" />
+                                                    <RadialGradientBrush.Transform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform ScaleY="0.65" />
+                                                        </TransformGroup>
+                                                    </RadialGradientBrush.Transform>
+                                                </RadialGradientBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <ContentPresenter HorizontalAlignment="Center"  
+                                    VerticalAlignment="Center"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                    <Button x:Name="south" Width="40" Content="S" Height="40" Margin="0,0,0,0" Click="South_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Ellipse Stroke="BurlyWood" StrokeThickness="4">
+                                        <Ellipse.Fill>
+                                            <RadialGradientBrush>
+                                                <GradientStop Offset="1"  
+                                            Color="LightSteelBlue" />
+                                                <GradientStop Offset="0"  
+                                            Color="White" />
+                                                <RadialGradientBrush.Transform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleY="0.65" />
+                                                    </TransformGroup>
+                                                </RadialGradientBrush.Transform>
+                                            </RadialGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <ContentPresenter HorizontalAlignment="Center"  
+                                    VerticalAlignment="Center"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Label 
+                    x:Name="location"
+                    Margin="20,0,10,0"
+                    Content="Location"
+                    Foreground="White"
+                    FontSize="18"
+                    HorizontalAlignment="Center"
+                    FontFamily="Comic Sans MS"/>
+                    <TextBox 
+                    x:Name="locationName" 
+                    Margin="20,0,20,0"
+                    Text="{Binding CurrentLocation.Name, Mode=OneWay}"
+                    TextAlignment="Center"
+                    BorderThickness="2"
+                    FontSize="12"
+                    FontFamily="Comic Sans MS"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBox
+                            x:Name="Row"
+                            Width="20"
+                            Margin="0,0,5,0"
+                             Text="{Binding CurrentLocation.Row, Mode=OneWay}"
+                        ></TextBox>
+                        <TextBox
+                            x:Name="Column"
+                            Width="20"
+                             Text="{Binding CurrentLocation.Column, Mode=OneWay}"
+                        ></TextBox>
+                    </StackPanel>
+
+
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
