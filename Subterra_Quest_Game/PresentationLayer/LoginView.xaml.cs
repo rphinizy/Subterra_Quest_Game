@@ -35,17 +35,17 @@ namespace Subterra_Quest_Game.PresentationLayer
 
         private void SetupWindow()
         {
-            List<string> colors = Enum.GetNames(typeof(Player.ColorType)).ToList();
-            PlayerColor.ItemsSource = colors;
+            //List<string> colors = Enum.GetNames(typeof(Player.ColorType)).ToList();
+            //PlayerColor.ItemsSource = colors;
         }
       
         private void EnterGame_Click(object sender, RoutedEventArgs e)
         {
             _player.Name = PlayerName.Text;
-            Enum.TryParse(PlayerColor.SelectionBoxItem.ToString(), out Player.ColorType color);
+            //Enum.TryParse(PlayerColor.SelectionBoxItem.ToString(), out Player.ColorType color);
             this.Hide();
 
-            _player.Color = color;
+            //_player.Color = color;
         }
 
         private void addDEF_Click(object sender, RoutedEventArgs e)

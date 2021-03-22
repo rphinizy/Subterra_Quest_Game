@@ -24,7 +24,7 @@
             </Border>
             <TextBox x:Name="PlayerName" Width="120" Height ="23" Margin="10,30,10,10"
                      FontSize="15" Text="Enter a Name"  TextAlignment="Center"></TextBox>
-            <Grid>
+            <!--<Grid>
                 <ComboBox x:Name="PlayerColor" Grid.Row="0" Grid.Column="0" Width="120" Background="Black" Foreground="black" Text="Choose Color" HorizontalAlignment="Center" VerticalAlignment="Center">
                     
                 </ComboBox>
@@ -33,123 +33,8 @@
                     Content="Player Color" Foreground ="black" FontSize="14" Grid.Column="0" Grid.Row="0"/>
 
             </Grid>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,10,0">
-
-                <Label x:Name ="Health"
-                           Margin="0,0,0,0"
-                           Content="HP"
-                           Foreground="white"
-                           FontSize="18"
-                           FontFamily="Comic Sans MS"
-                           HorizontalAlignment="Center">
-                </Label>
-                <TextBox x:Name="healthBox"
-                             FontSize="18"
-                             FontFamily="Comic Sans MS"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             Width="37"
-                             Text="{Binding Player.Health}">
-                </TextBox>
-                <Label x:Name ="Defense"
-                           Margin="20,0,0,0"
-                           Content="DEF"
-                           Foreground="white"
-                           FontSize="18"
-                           FontFamily="Comic Sans MS"
-                           HorizontalAlignment="Right">
-                </Label>
-                <TextBox x:Name="defBox"
-                             FontSize="18"
-                             FontFamily="Comic Sans MS"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             Width="37"
-                             Text="{Binding Player.Defense}">
-                       
-                </TextBox>
-                <Label x:Name ="Strength"
-                           Margin="20,0,0,0"
-                           Content="STR"
-                           Foreground="white"
-                           FontSize="18"
-                           FontFamily="Comic Sans MS"
-                           HorizontalAlignment="Left">
-                </Label>
-                <TextBox x:Name="strBox"
-                             HorizontalAlignment="Center"
-                             FontSize="18"
-                             FontFamily="Comic Sans MS"
-                             VerticalAlignment="Center"
-                             Width="37"
-                             Text="{Binding Player.Strength}">
-                </TextBox>
-                <Label x:Name ="Experience"
-                           Margin="20,0,0,0"
-                           Content="EXP"
-                           Foreground="white"
-                           FontSize="18"
-                           FontFamily="Comic Sans MS"
-                           HorizontalAlignment="Right">
-                </Label>
-                <TextBox  x:Name="ExperienceBox"
-                             FontSize="18" 
-                             FontFamily="Comic Sans MS"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             Width="37"
-                             Text="{Binding Player.Experience}">
-                </TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="63,0,0,0">
-                <Button x:Name="addHP"
-                            Content=" + "
-                            FontSize="10"
-                            FontWeight="ExtraBold"
-                            Height="25"
-                            Width="25"
-                            Margin="0,0,50,0"
-                            Click="addHP_Click">
-                </Button>
-                <Button x:Name="addDEF"
-                            Content=" + "
-                            FontSize="10"
-                            FontWeight="ExtraBold"
-                            Height="25"
-                            Width="25"
-                            Margin="27,0,0,0"
-                            Click="addDEF_Click">
-                </Button>
-                <Button x:Name="addSTR"
-                            Content=" + "
-                            FontSize="10"
-                            FontWeight="ExtraBold"
-                            Height="25"
-                            Width="25"
-                            Margin="77,0,0,0"
-                            Click="addSTR_Click">
-                </Button>
-                <Label x:Name ="Point"
-                           Margin="25,0,0,0"
-                           Content="Points"
-                           Foreground="white"
-                           FontSize="14"
-                           FontFamily="Comic Sans MS"
-                           HorizontalAlignment="Right">
-                </Label>
-                <TextBox x:Name="pointBox"
-                              Margin="2,0,0,0"
-                             FontSize="14"
-                             FontFamily="Comic Sans MS"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             TextAlignment="Center"
-                             Width="25"
-                               Text="{Binding Player.StatPoints}">
-                       
-                </TextBox>
-
-            </StackPanel>
+          -->
+ 
             <Button x:Name="EnterGame" Content="ENTER" Width="70" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,80,0,0" Click="EnterGame_Click"></Button>
         </StackPanel>
 
