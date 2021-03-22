@@ -6,35 +6,37 @@ using System.Threading.Tasks;
 
 namespace Subterra_Quest_Game.Models
 {
-    public class Character
+    public class Character : ObservableObject
     {
         #region ENUMERABLES
 
         public enum RaceType
         {
-            Human,
-            Thorian,
-            Xantorian
+            Human, 
+            Mole, 
+            Bunny, 
+            Worm, 
+            Geode, 
+            Gardner
         }
 
         #endregion
 
         #region FIELDS
 
-        protected int _id;
+        protected int _healthPoints;
         protected string _name;
         protected int _locationId;
-        protected int _age;
         protected RaceType _race;
 
         #endregion
 
         #region PROPERTIES
 
-        public int Id
+        public int HealthPoints
         {
-            get { return _id; }
-            set { _id = value; }
+            get { return _healthPoints; }
+            set { _healthPoints = value; }
         }
 
         public string Name
@@ -47,12 +49,6 @@ namespace Subterra_Quest_Game.Models
         {
             get { return _locationId; }
             set { _locationId = value; }
-        }
-
-        public int Age
-        {
-            get { return _age; }
-            set { _age = value; }
         }
 
         public RaceType Race
@@ -70,11 +66,12 @@ namespace Subterra_Quest_Game.Models
 
         }
 
-        public Character(string name, RaceType race, int locationId)
+        public Character(string name, RaceType race, int locationId, int healthPoints)
         {
             _name = name;
             _race = race;
             _locationId = locationId;
+            _healthPoints = healthPoints;
         }
 
         #endregion

@@ -24,6 +24,7 @@ namespace Subterra_Quest_Game.Models
         private int _rowChangeRequest;
         private int _ColumnChangeRequest;
         private GameMapCoordinates _currentLocationCoordinates;
+        private List<GameItem> _standardGameItems;
 
         private string[,] _gameCoordinatesAll = new string[6, 15] {{"no","no","no","no","no","no","no","no","no","no","no","no","no","no","no"},
                                                                    {"no","yes","yes","no","no","no","no","no","no","yes","yes","no","no","no","no"},
@@ -50,6 +51,12 @@ namespace Subterra_Quest_Game.Models
         public Location CurrentLocation
         {
             get { return _mapLocations[_currentLocationCoordinates.Row, _currentLocationCoordinates.Column]; }
+        }
+
+        public List<GameItem> StandardGameItems
+        {
+            get { return _standardGameItems; }
+            set { _standardGameItems = value; }
         }
 
         #endregion
@@ -117,6 +124,34 @@ namespace Subterra_Quest_Game.Models
         {
             _currentLocationCoordinates.Row = 1;
             _currentLocationCoordinates.Column = 1;
+        }
+
+        public void OpenLocationsByRareItem(int RareItemID)
+        {
+          
+           Location mapLocation = new Location();
+
+            for (int row = 0; row < 5; row++)
+            {
+                for (int column = 0; column < 15; column++)
+                {
+                    mapLocation = _mapLocations[row, column];
+
+                    if (mapLocation != null && mapLocation.RequiredRareItemID == RareItemID)
+                    {
+                        mapLocation.Accessible = true;
+
+                        mapLocation = _mapLocations[row, column-1];
+                        mapLocation.Message=($"{mapLocation.Name} is now accessible.");
+                        
+                       
+                        //_currentLocationCoordinates.Column -= 1;
+                    }
+                }
+             
+            }
+            //MoveEast();
+
         }
         #endregion
     }

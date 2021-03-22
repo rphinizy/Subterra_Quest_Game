@@ -26,12 +26,22 @@ namespace Subterra_Quest_Game.PresentationLayer
         {
             _gameInterfaceViewModel = gameInterfaceViewModel;
             InitializeComponent();
+            SetupWindow();
         }
 
-        public void HPStatButtonClick(object sender, RoutedEventArgs e)
+        private void SetupWindow()
         {
-            _gameInterfaceViewModel.HPStatPointClick();
+            ////
+            ///OMG HOW DO I GET THIS ENUM PROPERTY INTO A CONTROL BINDING ARRRGHHHHHH!!!!!
+            ///
+           // Enum.GetName(typeof(_gameInterfaceViewModel.Player.Color)).ToString();
+           // Enum.TryParse(_gameInterfaceViewModel.Player.Color.ToString();
+           // playerIcon.Background = _gameInterfaceViewModel.Player.Color;
+           // questText.Background=
+           // List<string> colors = Enum.GetNames(typeof(Player.ColorType)).ToList();
+            //PlayerColor.ItemsSource = colors;
         }
+
         public void STRStatButtonClick(object sender, RoutedEventArgs e)
         {
             _gameInterfaceViewModel.STRStatPointClick();
@@ -65,7 +75,26 @@ namespace Subterra_Quest_Game.PresentationLayer
         {
             _gameInterfaceViewModel.MoveStart();
             this.StartButton.Visibility = System.Windows.Visibility.Collapsed;
-            this.StartBorder.Visibility = System.Windows.Visibility.Collapsed;
+           
+        }
+
+        private void PickUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LocationItemsDataGrid.SelectedItem != null)
+            {
+                
+                _gameInterfaceViewModel.AddItemToInventory();
+                
+
+            }
+        }
+
+        private void UseButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InventoryDataGrid.SelectedItem != null)
+            {
+                _gameInterfaceViewModel.OnUseGameItem();
+            }
         }
     }
 }

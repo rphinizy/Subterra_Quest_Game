@@ -32,9 +32,9 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Height="275" Width="500">
                 <StackPanel.Background>
-                    <ImageBrush ImageSource="Images/subterramap.png" Stretch="Fill"/>
+                    <ImageBrush ImageSource="Images/mapSubterra.png" Stretch="Fill"/>
                 </StackPanel.Background>
-                
+
             </StackPanel>
             <!--* GRID ROW 0 -->
             <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -63,18 +63,19 @@
                         </Label>
                     </StackPanel>
 
-                    <Border BorderThickness="5" 
+                    <Border x:Name="playerIcon" BorderThickness="5" 
                         Margin="0,5,0,0"
                         BorderBrush="SaddleBrown"
                         Width="100"
                         Height="100"
-                        Background="RosyBrown"
+                        Background="{Binding Player.Color}"
                         CornerRadius="8">
                         <Image Source="{Binding Player.FormImg}" 
                            Margin="5,5,5,5"
                        Stretch="Uniform" 
                        MaxHeight="95">
                         </Image>
+                        
                     </Border>
                     <TextBox x:Name="formName"
                          Text="{Binding Player.Form}"
@@ -86,8 +87,44 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="2">
-
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,50,0,0">
+                <Border BorderThickness="5" 
+                        BorderBrush="SaddleBrown"
+                        CornerRadius="8"
+                        Height="100"
+                        Width="200">
+                    <DataGrid 
+                          x:Name="LocationItemsDataGrid"
+                          Height="100"
+                          Width="200"
+                          ItemsSource="{Binding CurrentLocation.GameItems}" 
+                          SelectedItem="{Binding CurrentGameItem}"
+                          AutoGenerateColumns="False"
+                          >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn 
+                             Header="Available Items" 
+                             IsReadOnly="True"                 
+                             Binding="{Binding Information, Mode=OneWay}"
+                             Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style>
+                                        <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+                <Border BorderThickness="5" 
+                        BorderBrush="SaddleBrown"
+                        CornerRadius="8"
+                        Margin="50,10,50,20">
+                    <Button     Background="RosyBrown"
+                                Content="Pick Up" 
+                                Click="PickUpButton_Click"/>
+                </Border>
+                
             </StackPanel>
 
             <!--* GRID ROW 1 -->
@@ -132,19 +169,29 @@
                     Background="LavenderBlush" Click="Start_Click">
                     </Button>
                 </Border>
-                
-                
+
+
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" Margin="0,10,0,5">
+                
                 <Border BorderBrush="SaddleBrown" BorderThickness="7" CornerRadius="8">
-                    <TextBox x:Name="questText" TextAlignment="Center"
+                    <StackPanel Height="200">
+                        <TextBox x:Name="questText" TextAlignment="Center" VerticalAlignment="Top" 
                     Background="{Binding CurrentLocation.ModifyChamberColor}"
                     Foreground="White"
                     Text="{Binding CurrentLocation.Description, Mode=OneWay}"
-                    Height="200"
+                    Height="100"
                     FontSize="16">
-                    </TextBox>
+                        </TextBox>
+                        <TextBox x:Name="PlayerText" TextAlignment="Center" VerticalAlignment="Top" 
+                    Background="{Binding CurrentLocation.ModifyChamberColor}"
+                    Foreground="White"
+                    Text="{Binding Player.PlayerMessage, Mode=OneWay}"
+                    Height="100"
+                    FontSize="16">
+                        </TextBox>
+                    </StackPanel>
                 </Border>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,10,0">
 
@@ -215,22 +262,14 @@
                     </TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="63,0,0,0">
-                    <Button x:Name="addHP"
-                            Content=" + "
-                            FontSize="10"
-                            FontWeight="ExtraBold"
-                            Height="25"
-                            Width="25"
-                            Margin="0,0,50,0"
-                            Click="HPStatButtonClick">
-                    </Button>
+                   
                     <Button x:Name="addDEF"
                             Content=" + "
                             FontSize="10"
                             FontWeight="ExtraBold"
                             Height="25"
                             Width="25"
-                            Margin="27,0,0,0"
+                            Margin="140,0,0,0"
                             Click="DEFStatButtonClick">
                     </Button>
                     <Button x:Name="addSTR"
@@ -264,14 +303,43 @@
 
                 </StackPanel>
             </StackPanel>
+
             <Border BorderBrush="SaddleBrown" BorderThickness="7" Grid.Column="0" Grid.Row="2" Margin="35,5,5,10" CornerRadius="8">
                 <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Vertical">
                     <StackPanel.Background>
                         <ImageBrush ImageSource="Images/inventorybackground.jpg" Stretch="UniformToFill"/>
                     </StackPanel.Background>
+                    <Border BorderThickness="5" 
+                        BorderBrush="SaddleBrown"
+                        CornerRadius="8"
+                        Height="190"
+                        Width="180"
+                        Margin="5,5,5,5">
+                        <DataGrid  Height="190" Width="180"
+                            x:Name="InventoryDataGrid"
+                            ItemsSource="{Binding Player.Inventory}"
+                            SelectedItem="{Binding CurrentGameItem}"
+                            AutoGenerateColumns="False"
+                            HeadersVisibility="Column">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name"
+                                                Binding="{Binding Name, Mode=OneWay}"
+                                                Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                    <Border BorderThickness="5" 
+                        BorderBrush="SaddleBrown"
+                        CornerRadius="8"
+                        Margin="50,0,50,0">
+                        <Button 
+                                Background="RosyBrown"
+                                Content="Use" 
+                                Click="UseButton_Click"/>
+                    </Border>
                     <StackPanel Orientation="Vertical">
                         <Label HorizontalAlignment="Center"
-                           Margin="0,5,0,20"
+                           Margin="0,0,0,20"
                            Content="Inventory"
                            Foreground="White"
                            FontSize="25"
@@ -444,20 +512,6 @@
                     BorderThickness="2"
                     FontSize="12"
                     FontFamily="Comic Sans MS"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBox
-                            x:Name="Row"
-                            Width="20"
-                            Margin="0,0,5,0"
-                             Text="{Binding CurrentLocation.Row, Mode=OneWay}"
-                        ></TextBox>
-                        <TextBox
-                            x:Name="Column"
-                            Width="20"
-                             Text="{Binding CurrentLocation.Column, Mode=OneWay}"
-                        ></TextBox>
-                    </StackPanel>
-
 
                 </StackPanel>
             </Border>
