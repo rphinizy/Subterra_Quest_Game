@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Subterra_Quest_Game.Models
 {
-    public class Character : ObservableObject
+    public abstract class Character : ObservableObject
     {
         #region ENUMERABLES
 
@@ -24,14 +24,25 @@ namespace Subterra_Quest_Game.Models
 
         #region FIELDS
 
+        protected int _id;
         protected int _healthPoints;
         protected string _name;
         protected int _locationId;
         protected RaceType _race;
 
+        //need to add id for NPC's for addition to map. 
+
+        protected Random random = new Random();
+
         #endregion
 
         #region PROPERTIES
+
+        public int ID
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         public int HealthPoints
         {
@@ -57,6 +68,13 @@ namespace Subterra_Quest_Game.Models
             set { _race = value; }
         }
 
+        public string Greeting
+        {
+            get
+            {
+                return DefaultGreeting();
+            }
+        }
         #endregion
 
         #region CONSTRUCTORS
@@ -66,8 +84,9 @@ namespace Subterra_Quest_Game.Models
 
         }
 
-        public Character(string name, RaceType race, int locationId, int healthPoints)
+        public Character(int id, string name, RaceType race, int locationId, int healthPoints)
         {
+            _id = id;
             _name = name;
             _race = race;
             _locationId = locationId;
@@ -77,12 +96,8 @@ namespace Subterra_Quest_Game.Models
         #endregion
 
         #region METHODS
-
-        public virtual string DefaultGreeting()
-        {
-            return $"Hello, my name is {_name} and I am a {_race}.";
-        }
-
+        public abstract string DefaultGreeting();
+       
         #endregion
     }
 }

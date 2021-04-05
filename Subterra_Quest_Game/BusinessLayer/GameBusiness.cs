@@ -29,7 +29,7 @@ namespace Subterra_Quest_Game.BusinessLayer
             _loginView = new LoginView(_player);
             _player.Experience = GameData.PlayerData().Experience;
             _player.StatPoints = GameData.PlayerData().StatPoints;
-            _player.Health = GameData.PlayerData().Health;
+            _player.HealthPoints = GameData.PlayerData().HealthPoints;
             _player.Stamina = GameData.PlayerData().Stamina;
             _player.Defense = GameData.PlayerData().Defense;
             _player.Strength = GameData.PlayerData().Strength;
@@ -46,8 +46,9 @@ namespace Subterra_Quest_Game.BusinessLayer
             _player.Inventory = GameData.PlayerData().Inventory;
             _player.Form = GameData.PlayerData().Form;
             _player.FormImg = GameData.PlayerData().FormImg;
+            _player.SkillLevel = GameData.PlayerData().SkillLevel;
+           
 
-            //_messages = GameData.InitialMessages();
         }
         private void ShowGameInterface()
         {

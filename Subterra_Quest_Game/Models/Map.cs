@@ -85,11 +85,15 @@ namespace Subterra_Quest_Game.Models
         }
         public void MoveEast()
         {
-            _ColumnChangeRequest = _currentLocationCoordinates.Column + 1;
-
-            if (_gameCoordinatesAll[_currentLocationCoordinates.Row, _ColumnChangeRequest] == "yes")
+            if (CurrentLocation.Accessible == true)
+            
             {
-                _currentLocationCoordinates.Column += 1;
+                _ColumnChangeRequest = _currentLocationCoordinates.Column + 1;
+
+                if (_gameCoordinatesAll[_currentLocationCoordinates.Row, _ColumnChangeRequest] == "yes")
+                {
+                    _currentLocationCoordinates.Column += 1;
+                }
             }
         }
         public void MoveSouth()
@@ -139,12 +143,14 @@ namespace Subterra_Quest_Game.Models
 
                     if (mapLocation != null && mapLocation.RequiredRareItemID == RareItemID)
                     {
-                        mapLocation.Accessible = true;
+                        //mapLocation.Accessible = true;
+                        _mapLocations[_currentLocationCoordinates.Row, _currentLocationCoordinates.Column].Accessible = true;
+                        mapLocation = _mapLocations[row, column];
+                        //mapLocation.Message=($"{mapLocation.Name} is now accessible.");
+                        _mapLocations[_currentLocationCoordinates.Row, _currentLocationCoordinates.Column].Message=($"{mapLocation.Name} is now accessible.");
+                        _mapLocations[_currentLocationCoordinates.Row, _currentLocationCoordinates.Column].Description= ($"The figure regards you warmly. \n\n Welcome to {mapLocation.Name}, friend!");
 
-                        mapLocation = _mapLocations[row, column-1];
-                        mapLocation.Message=($"{mapLocation.Name} is now accessible.");
-                        
-                       
+
                         //_currentLocationCoordinates.Column -= 1;
                     }
                 }

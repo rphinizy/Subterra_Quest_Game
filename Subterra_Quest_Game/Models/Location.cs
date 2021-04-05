@@ -11,18 +11,22 @@ namespace Subterra_Quest_Game.Models
     {
         #region FIELDS
 
+        private int _id;
         private string _name;
         private string _modifyForm;
         private string _modifyFormImg;
         private string _modifyPlayerMessage;
+        private string _modifyLocationMessage;
         private string _modifyChamberColor;
         private string _modifyMapLocatorTop;
         private string _modifyMapLocatorLeft;
         private string _description;
         private string _message;
         private bool _accessible;
+        private int _modifiyExperiencePoints;
         private int _requiredRareItemID;
         private ObservableCollection<GameItem> _gameItems;
+        private ObservableCollection<NPC> _npcs;
         #endregion
 
         #region PROPERTIES
@@ -32,6 +36,12 @@ namespace Subterra_Quest_Game.Models
         {
             get { return _name; }
             set { _name = value; }
+        }
+
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
         }
 
         public string Description
@@ -67,6 +77,11 @@ namespace Subterra_Quest_Game.Models
             get { return _modifyPlayerMessage; }
             set { _modifyPlayerMessage = value; }
         }
+        public string ModifyLocationMessage
+        {
+            get { return _modifyLocationMessage; }
+            set { _modifyLocationMessage = value; }
+        }
         public string ModifyChamberColor
         {
             get { return _modifyChamberColor; }
@@ -82,6 +97,11 @@ namespace Subterra_Quest_Game.Models
             get { return _modifyMapLocatorLeft; }
             set { _modifyMapLocatorLeft = value; }
         }
+        public int ModifiyExperiencePoints
+        {
+            get { return _modifiyExperiencePoints; }
+            set { _modifiyExperiencePoints = value; }
+        }
 
         public int RequiredRareItemID
         {
@@ -93,6 +113,12 @@ namespace Subterra_Quest_Game.Models
         {
             get { return _gameItems; }
             set { _gameItems = value; }
+        }
+
+        public ObservableCollection<NPC> NPCS
+        {
+            get { return _npcs; }
+            set { _npcs = value; }
         }
         #endregion
 
@@ -108,10 +134,10 @@ namespace Subterra_Quest_Game.Models
 
         #region METHODS
 
-        public override string ToString()
-        {
-            return _name;
-        }
+        //public override string ToString()
+        //{
+           // return _name;
+        //}
 
         //
         // code with a for each loop to search each item in player inventory and compare to map location required itemID.
@@ -142,6 +168,7 @@ namespace Subterra_Quest_Game.Models
         {
             if (selectedGameItem != null)
             {
+
                 _gameItems.Add(selectedGameItem);
             }
 

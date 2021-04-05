@@ -34,12 +34,14 @@ namespace Subterra_Quest_Game.PresentationLayer
             ////
             ///OMG HOW DO I GET THIS ENUM PROPERTY INTO A CONTROL BINDING ARRRGHHHHHH!!!!!
             ///
-           // Enum.GetName(typeof(_gameInterfaceViewModel.Player.Color)).ToString();
-           // Enum.TryParse(_gameInterfaceViewModel.Player.Color.ToString();
-           // playerIcon.Background = _gameInterfaceViewModel.Player.Color;
-           // questText.Background=
-           // List<string> colors = Enum.GetNames(typeof(Player.ColorType)).ToList();
+            // Enum.GetName(typeof(_gameInterfaceViewModel.Player.Color)).ToString();
+            // Enum.TryParse(_gameInterfaceViewModel.Player.Color.ToString();
+            // playerIcon.Background = _gameInterfaceViewModel.Player.Color;
+            // questText.Background=
+            // List<string> colors = Enum.GetNames(typeof(Player.ColorType)).ToList();
             //PlayerColor.ItemsSource = colors;
+            _gameInterfaceViewModel.InitialLocation();
+
         }
 
         public void STRStatButtonClick(object sender, RoutedEventArgs e)
@@ -89,12 +91,56 @@ namespace Subterra_Quest_Game.PresentationLayer
             }
         }
 
+        private void DropButton_Click(object sender, RoutedEventArgs e)
+        {
+             if (PlayerDataTabControl.SelectedItem != null)
+                {
+
+                _gameInterfaceViewModel.RemoveItemFromInventory();
+
+
+            }
+        }
+
         private void UseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (InventoryDataGrid.SelectedItem != null)
+            if (PlayerDataTabControl.SelectedItem != null)
             {
                 _gameInterfaceViewModel.OnUseGameItem();
             }
         }
+
+        private void SpeakToButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LocationNpcsDataGrid.SelectedItem != null)
+            {
+                _gameInterfaceViewModel.OnPlayerTalkTo();
+            }
+        }
+
+        private void AttackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LocationNpcsDataGrid.SelectedItem != null)
+            {
+                _gameInterfaceViewModel.OnPlayerAttack();
+            }
+        }
+
+        private void DefendButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LocationNpcsDataGrid.SelectedItem != null)
+            {
+                _gameInterfaceViewModel.OnPlayerDefend();
+            }
+        }
+
+        private void RetreatButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LocationNpcsDataGrid.SelectedItem != null)
+            {
+                _gameInterfaceViewModel.OnPlayerRetreat();
+            }
+        }
+
     }
 }

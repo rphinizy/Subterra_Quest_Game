@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Subterra_Quest_Game.Models
 {
-   public class GameItem
+   public abstract class GameItem
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -18,11 +18,7 @@ namespace Subterra_Quest_Game.Models
 
         public string ItemIcon { get; set; }
 
-        public virtual string InformationString()
-        {
-            return $"{Name}: {Description} \nValue:{Value}";
-        }
-
+       
         public string Information
         {
             get
@@ -48,5 +44,7 @@ namespace Subterra_Quest_Game.Models
             Value = value;
             Description = description;
         }
+
+        public abstract string InformationString();
     }
 }

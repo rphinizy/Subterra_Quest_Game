@@ -86,14 +86,60 @@
                     </TextBox>
                 </StackPanel>
             </StackPanel>
+            <StackPanel Grid.Column="2" Grid.Row="1">
+             
+                    <StackPanel
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal"
+                            Margin="0,0,40,0">
+                    <Border BorderBrush="SaddleBrown" BorderThickness="3" CornerRadius="8" Height="36">
+                    <Button 
+                                Content="Speak To" 
+                                Width="75"
+                                Height="30"
+                                Click="SpeakToButton_Click"/>
+                    </Border>
 
-            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,50,0,0">
+                    <StackPanel
+                                Orientation="Vertical"
+                                Margin="5">
+
+                        <Border BorderBrush="DarkRed" BorderThickness="3" CornerRadius="8" Height="30" Width="55"  Margin="0,3,0,3">
+                            <Button
+                                
+                                Width="50"
+                                Height="25"
+                                Content="Attack" 
+                                Click="AttackButton_Click"/>
+                        </Border>
+                        <Border BorderBrush="Blue" BorderThickness="3" CornerRadius="8" Height="30" Width="55" Margin="0,0,0,3">
+                            <Button
+                                Width="50"
+                                Height="25"
+                                Content="Defend" 
+                                Click="DefendButton_Click"/>
+                        </Border>
+                        <Border BorderBrush="Goldenrod" BorderThickness="3" CornerRadius="8" Height="30" Width="55" Margin="0,0,0,3">
+                            <Button 
+                                Content="Retreat"
+                                Click="RetreatButton_Click"/>
+                        </Border>
+                    </StackPanel>
+                    </StackPanel>
                 <Border BorderThickness="5" 
                         BorderBrush="SaddleBrown"
                         CornerRadius="8"
-                        Height="100"
-                        Width="200">
-                    <DataGrid 
+                        Height="150"
+                        Width="200"
+                        Margin="0,0,30,0"
+                        
+                    Grid.Column="2" Grid.Row="1">
+                <TabControl x:Name="LocationInfoTabControl"  Width="190" Height="150">
+
+                    <TabItem Header="Item"
+                              x:Name="ItemsInfoTabItem">
+                        <DataGrid 
                           x:Name="LocationItemsDataGrid"
                           Height="100"
                           Width="200"
@@ -101,31 +147,62 @@
                           SelectedItem="{Binding CurrentGameItem}"
                           AutoGenerateColumns="False"
                           >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn 
+                            <DataGrid.Columns>
+                                <DataGridTextColumn 
                              Header="Available Items" 
                              IsReadOnly="True"                 
                              Binding="{Binding Information, Mode=OneWay}"
                              Width="*">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style>
-                                        <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Border>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="NPCs"
+                                        x:Name="NpcsInfoTabItem">
+                        <DataGrid 
+                                            x:Name="LocationNpcsDataGrid"
+                                            Height="150"
+                                            ItemsSource="{Binding CurrentLocation.NPCS}" 
+                                            SelectedItem="{Binding CurrentNpc}"
+                                            AutoGenerateColumns="False"
+                                            HeadersVisibility="Column">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn 
+                                                    Header="Description" 
+                                                    IsReadOnly="True"                 
+                                                    Binding="{Binding Information, Mode=OneWay}"
+                                                    Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+
+                </TabControl>
+            </Border>
                 <Border BorderThickness="5" 
                         BorderBrush="SaddleBrown"
                         CornerRadius="8"
-                        Margin="50,10,50,20">
+                        Margin="20,10,50,20"
+                        Width="100">
                     <Button     Background="RosyBrown"
                                 Content="Pick Up" 
+                                Width="100"
                                 Click="PickUpButton_Click"/>
                 </Border>
-                
             </StackPanel>
+
+           
+           
 
             <!--* GRID ROW 1 -->
             <Canvas Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -180,7 +257,7 @@
                         <TextBox x:Name="questText" TextAlignment="Center" VerticalAlignment="Top" 
                     Background="{Binding CurrentLocation.ModifyChamberColor}"
                     Foreground="White"
-                    Text="{Binding CurrentLocation.Description, Mode=OneWay}"
+                    Text="{Binding CurrentLocationInformation, Mode=OneWay}"
                     Height="100"
                     FontSize="16">
                         </TextBox>
@@ -209,7 +286,7 @@
                              VerticalAlignment="Center"
                              HorizontalAlignment="Center"
                              Width="37"
-                             Text="{Binding Player.Health}">
+                             Text="{Binding Player.HealthPoints}">
                     </TextBox>
                     <Label x:Name ="Defence"
                            Margin="20,0,0,0"
@@ -309,34 +386,87 @@
                     <StackPanel.Background>
                         <ImageBrush ImageSource="Images/inventorybackground.jpg" Stretch="UniformToFill"/>
                     </StackPanel.Background>
+                    
                     <Border BorderThickness="5" 
                         BorderBrush="SaddleBrown"
                         CornerRadius="8"
                         Height="190"
                         Width="180"
                         Margin="5,5,5,5">
-                        <DataGrid  Height="190" Width="180"
-                            x:Name="InventoryDataGrid"
+                        <TabControl 
+                            x:Name="PlayerDataTabControl"
+                            >
+                            <TabItem Header="Food"
+                                     x:Name="FoodTabItem">
+                                <DataGrid  Height="190" Width="180"
+                            x:Name="FoodDataGrid"
                             ItemsSource="{Binding Player.Inventory}"
                             SelectedItem="{Binding CurrentGameItem}"
                             AutoGenerateColumns="False"
                             HeadersVisibility="Column">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Name"
+                                        <DataGridTextColumn Header="Name"
                                                 Binding="{Binding Name, Mode=OneWay}"
                                                 Width="*"/>
-                            </DataGrid.Columns>
+                                    </DataGrid.Columns>
                         </DataGrid>
+                            </TabItem>
+                            <TabItem Header="Rare Items"
+                                     x:Name="RareTabItem">
+                                <DataGrid  Height="190" Width="180"
+                            x:Name="RareDataGrid"
+                            ItemsSource="{Binding Player.Inventory}"
+                            SelectedItem="{Binding CurrentGameItem}"
+                            AutoGenerateColumns="False"
+                            HeadersVisibility="Column">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name"
+                                                Binding="{Binding Name, Mode=OneWay}"
+                                                Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem Header="Attacks"
+                                     x:Name="AttackTabItem">
+                                <DataGrid  Height="190" Width="180"
+                            x:Name="AttackDataGrid"
+                            ItemsSource="{Binding Player.Inventory}"
+                            SelectedItem="{Binding CurrentGameItem}"
+                            AutoGenerateColumns="False"
+                            HeadersVisibility="Column">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name"
+                                                Binding="{Binding Name, Mode=OneWay}"
+                                                Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                        </TabControl>
                     </Border>
-                    <Border BorderThickness="5" 
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Border BorderThickness="5" 
                         BorderBrush="SaddleBrown"
                         CornerRadius="8"
-                        Margin="50,0,50,0">
-                        <Button 
+                        Margin="0,0,5,0">
+                            <Button x:Name="use"
+                                Width="50"
                                 Background="RosyBrown"
                                 Content="Use" 
                                 Click="UseButton_Click"/>
-                    </Border>
+                        </Border>
+                        <Border BorderThickness="5" 
+                        BorderBrush="SaddleBrown"
+                        CornerRadius="8"
+                        Margin="5,0,0,0">
+                            <Button x:Name="drop"
+                                    Width="50"
+                                Background="RosyBrown"
+                                Content="Drop" 
+                                Click="DropButton_Click"/>
+                        </Border>
+                    </StackPanel>
+
                     <StackPanel Orientation="Vertical">
                         <Label HorizontalAlignment="Center"
                            Margin="0,0,0,20"

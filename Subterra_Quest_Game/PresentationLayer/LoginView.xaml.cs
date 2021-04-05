@@ -73,7 +73,7 @@ namespace Subterra_Quest_Game.PresentationLayer
         {
             if (_player.StatPoints > 0)
             {
-                _player.Health = _player.Health + 1;
+                _player.HealthPoints = _player.HealthPoints + 1;
                 _player.StatPoints = _player.StatPoints - 1;
             }
         }
