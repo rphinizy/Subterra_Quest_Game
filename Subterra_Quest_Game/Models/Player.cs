@@ -38,6 +38,7 @@ namespace Subterra_Quest_Game.Models
         private int _defense;
         private int _experience;
         private int _statPoints;
+        private string _playerColor;
 
         private int _skillLevel;
         private Weapon _currentWeapon;
@@ -46,12 +47,15 @@ namespace Subterra_Quest_Game.Models
 
         protected ColorType _color;
         private List<Location> _locationsVisited;
+        private List<NPC> _npcsEngaged;
         private List<GameItem> _itemPickedUp;
 
         private ObservableCollection<GameItem> _inventory;
         private ObservableCollection<GameItem> _food;
         private ObservableCollection<GameItem> _rareItem;
         private ObservableCollection<GameItem> _weapons;
+        private ObservableCollection<Quest> _quests;
+
 
         #endregion
 
@@ -70,6 +74,15 @@ namespace Subterra_Quest_Game.Models
             get { return _formImg; }
             set { _formImg = value;
                  OnPropertyChanged(nameof(FormImg));
+            }
+        }
+        public string PlayerColor
+        {
+            get { return _playerColor; }
+            set
+            {
+                _playerColor = value;
+                OnPropertyChanged(nameof(PlayerColor));
             }
         }
 
@@ -156,6 +169,12 @@ namespace Subterra_Quest_Game.Models
             set { _locationsVisited = value; }
         }
 
+        public List<NPC> NpcsEngaged
+        {
+            get { return _npcsEngaged; }
+            set { _npcsEngaged = value; }
+        }
+
         public List<GameItem> ItemPickedUp
         {
             get { return _itemPickedUp; }
@@ -171,18 +190,27 @@ namespace Subterra_Quest_Game.Models
         public ObservableCollection<GameItem> Food
         {
             get { return _food; }
-            set { _food = value; }
+            set { _food = value;
+               
+            }
         }
 
         public ObservableCollection<GameItem> RareItem
         {
             get { return _rareItem; }
-            set { _rareItem = value; }
+            set { _rareItem = value;
+               
+            }
         }
         public ObservableCollection<GameItem> Weapons
         {
             get { return _weapons; }
             set { _weapons = value; }
+        }
+        public ObservableCollection<Quest> Quests
+        {
+            get { return _quests; }
+            set { _quests = value; }
         }
 
         #endregion
@@ -191,29 +219,73 @@ namespace Subterra_Quest_Game.Models
 
         public Player()
         {
+            _npcsEngaged = new List<NPC>();
             _locationsVisited = new List<Location>();
             _itemPickedUp = new List<GameItem>();
             _food = new ObservableCollection<GameItem>();
             _rareItem = new ObservableCollection<GameItem>();
             _weapons = new ObservableCollection<GameItem>();
+            _quests = new ObservableCollection<Quest>();
         }
 
+        public Player(string name, RaceType race, int health, int stamina, int strength, int skillLevel, string playerMessage)
+             : base(name, race, health)
+        {
+            SkillLevel = skillLevel;
+            PlayerMessage = playerMessage;
+            Strength = strength;
+            Stamina = stamina;
+           
+        }
         #endregion
 
         #region METHODS
+
+        public void UpdateMissionStatus()
+        {
+            //
+            // Note: only loop through assigned missions and cast mission to proper child class
+            //
+            foreach (Quest quest in _quests.Where(m => m.Status == Quest.QuestStatus.Incomplete))
+            {
+                if (quest is QuestTravel)
+                {
+                    if (((QuestTravel)quest).LocationsNotCompleted(_locationsVisited).Count == 0)
+                    {
+                        quest.Status = Quest.QuestStatus.Complete;
+                        Experience += quest.ExperiencePoints;
+                        _playerMessage = "Quest Completed. \n You gianed experience!";
+                    }
+                }
+               
+                
+                else if (quest is QuestEngage)
+                {
+                    if (((QuestEngage)quest).NpcsNotCompleted(_npcsEngaged).Count == 0)
+                    {
+                       quest.Status = Quest.QuestStatus.Complete;
+                       Experience += quest.ExperiencePoints;
+                    }
+                }
+                else
+                {
+                    throw new Exception("Unknown Mission child class.");
+                }
+            }
+        }
 
         public void UpdateInventoryCategories()
         {
            Food.Clear();
            RareItem.Clear();
-            Weapons.Clear();
+           //Weapons.Clear();
      
 
             foreach (var gameItem in _inventory)
             {
                 if (gameItem is Food) Food.Add(gameItem);
                 if (gameItem is RareItem) RareItem.Add(gameItem);
-                if (gameItem is Weapon) Weapons.Add(gameItem);
+               // if (gameItem is Weapon) Weapons.Add(gameItem);
 
             }
         }
@@ -224,6 +296,9 @@ namespace Subterra_Quest_Game.Models
             {
                 _inventory.Add(selectedGameItem);
             }
+
+           
+            UpdateInventoryCategories();
         }
 
 
@@ -233,6 +308,7 @@ namespace Subterra_Quest_Game.Models
             {
                 _inventory.Remove(selectedGameItem);
             }
+            UpdateInventoryCategories();
         }
 
         public bool HasVisited(Location location)
@@ -249,7 +325,7 @@ namespace Subterra_Quest_Game.Models
         #region BATTLE METHODS
         public int Attack()
         {
-            int hitPoints = random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage) * _skillLevel;
+            int hitPoints = random.Next(1, _strength ) * _skillLevel;
 
             if (hitPoints <= 100)
             {
@@ -277,7 +353,7 @@ namespace Subterra_Quest_Game.Models
 
         public int Defend()
         {
-            int hitPoints = (random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage) * _skillLevel) - DEFENDER_DAMAGE_ADJUSTMENT;
+            int hitPoints = (random.Next(0, _stamina) * _skillLevel);
 
             if (hitPoints >= 0 && hitPoints <= 100)
             {

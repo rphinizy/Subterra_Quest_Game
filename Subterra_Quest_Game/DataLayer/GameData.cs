@@ -17,7 +17,7 @@ namespace Subterra_Quest_Game.DataLayer
                 Name="Crunchy",
                 Form ="Human",
                 FormImg = "Images/hand.png",
-                HealthPoints = 100,
+                Health = 100,
                 Experience = 20,
                 Defense = 2,
                 Strength = 2,
@@ -26,9 +26,15 @@ namespace Subterra_Quest_Game.DataLayer
                 Color = Player.ColorType.Red,
                 Inventory = new ObservableCollection<GameItem>()
                 {
-                  GameItemById(3001)
+                    GameItemById(1000)
+                   
+                },
+                Quests = new ObservableCollection<Quest>()
+                {
+                    QuestById(1),
+                    QuestById(2)
                 }
-            
+
             };
         }
 
@@ -37,7 +43,7 @@ namespace Subterra_Quest_Game.DataLayer
             return new List<string>()
             {
                 "\n          Welcome to the subterranean world of creepy crawlies.",
-                "    Start your new life as a fierce ground beetle and fight monsters \n     for experience and loot as you make your way to Mole-City! "
+                "    Start your new life as a fierce ground beetle and fight monsters \n   Check the NPC tab for tutorial instructions. "
                 
             };
         }
@@ -47,9 +53,26 @@ namespace Subterra_Quest_Game.DataLayer
             return StandardGameItems().FirstOrDefault(i => i.ID == id);
         }
 
+        private static Location LocationById(int id)
+        {
+            List<Location> locations = new List<Location>();
+
+            foreach (Location location in GameMap().MapLocations)
+            {
+                if (location != null) locations.Add(location);
+            }
+
+            return locations.FirstOrDefault(i => i.Id == id);
+        }
+
         private static NPC NpcById(int id)
         {
             return Npcs().FirstOrDefault(i => i.ID == id);
+        }
+
+        private static Quest QuestById(int id)
+        {
+            return Quests().FirstOrDefault(m => m.Id == id);
         }
 
         public static GameMapCoordinates InitialGameMapLocation()
@@ -77,7 +100,11 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyForm = "Human",
                 ModifyFormImg = "Images/hand.png",
                 ModifyChamberColor = "RosyBrown",
-                ModifyPlayerMessage = ""
+                ModifyPlayerMessage = "",
+                NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(9999)
+                }
             };
 
             gameMap.MapLocations[1, 1] = new Location()
@@ -93,7 +120,13 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop ="140",
                 ModifyMapLocatorLeft="113",
-                ModifyPlayerMessage = ""
+                ModifyLocationMessage = "Have you been here before? It seems familiar",
+                ModifyPlayerMessage="",
+                NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(2001),
+                    NpcById(1000)
+                }
             };
 
             gameMap.MapLocations[1, 2] = new Location()
@@ -108,7 +141,8 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "140",
                 ModifyMapLocatorLeft = "133",
-                ModifyPlayerMessage = "",
+                ModifyLocationMessage = "It's still dark and damp",
+                ModifyPlayerMessage="",
               NPCS = new ObservableCollection<NPC>
                 {
                     NpcById(2001)
@@ -128,10 +162,15 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "155",
                 ModifyMapLocatorLeft = "113",
-                ModifyPlayerMessage = "",
+                ModifyLocationMessage = "Are you going in circles?",
+                ModifyPlayerMessage="",
                 GameItems = new ObservableCollection<GameItem>
                 {
                     GameItemById(1001)
+                },
+                 NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(2001)
                 }
             };
 
@@ -147,7 +186,12 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "155",
                 ModifyMapLocatorLeft = "133",
-                ModifyPlayerMessage = ""
+                ModifyLocationMessage = "It's dark in here",
+                ModifyPlayerMessage ="",
+                NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(2001)
+                }
 
             };
 
@@ -163,7 +207,8 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "158",
                 ModifyMapLocatorLeft = "155",
-                ModifyPlayerMessage = "",
+                ModifyLocationMessage = "Up ahead the hooded creature is still there",
+                ModifyPlayerMessage="",
                 GameItems = new ObservableCollection<GameItem>
                 {
                     GameItemById(2002)
@@ -181,9 +226,11 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "160",
                 ModifyMapLocatorLeft = "178",
-                ModifyPlayerMessage = "",
+                ModifyLocationMessage = "The hooded figure sits paitiently",
+                ModifyPlayerMessage="",
                 NPCS = new ObservableCollection<NPC>
                 {
+
                     NpcById(1001)
                 }
             };
@@ -196,10 +243,11 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifiyExperiencePoints = 20,
                 ModifyForm = "Mole",
                 ModifyFormImg = "Images/mole3.png",
-                ModifyChamberColor = "DarkGray",
+                ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "170",
                 ModifyMapLocatorLeft = "195",
-                ModifyPlayerMessage = "",
+                ModifyLocationMessage = "Mole City West Gate",
+                ModifyPlayerMessage="",
                 RequiredRareItemID = 2002
 
             };
@@ -207,15 +255,20 @@ namespace Subterra_Quest_Game.DataLayer
             {
                 Id=9,
                 Name = "Mole City NE",
-                Description = "You see the city exit to the East",
+                Description = "The worms are much, much, MUCH bigger here",
                 Accessible = true,
                 ModifiyExperiencePoints = 20,
                 ModifyForm = "Mole",
                 ModifyFormImg = "Images/mole3.png",
-                ModifyChamberColor = "DarkGray",
+                ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "170",
                 ModifyMapLocatorLeft = "215",
-                ModifyPlayerMessage = ""
+                ModifyLocationMessage = "You see the city exit to the East",
+                ModifyPlayerMessage="",
+                NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(2002)
+                }
             };
             gameMap.MapLocations[3, 5] = new Location()
             {
@@ -226,10 +279,15 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifiyExperiencePoints = 20,
                 ModifyForm = "Mole",
                 ModifyFormImg = "Images/mole3.png",
-                ModifyChamberColor = "DarkGray",
+                ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "185",
                 ModifyMapLocatorLeft = "195",
-                ModifyPlayerMessage = ""
+                ModifyLocationMessage= "The worm farm seems to be non - operatonal \n Perhaps a later game expantion ? ",
+                ModifyPlayerMessage = "",
+                NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(2002)
+                }
             };
             gameMap.MapLocations[3, 6] = new Location()
             {
@@ -240,9 +298,11 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifiyExperiencePoints = 20,
                 ModifyForm = "Mole",
                 ModifyFormImg = "Images/mole3.png",
-                ModifyChamberColor = "DarkGray",
+                ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "185",
                 ModifyMapLocatorLeft = "215",
+                ModifyLocationMessage="The Villagers regard you indifferently",
+                ModifyPlayerMessage="",
                  GameItems = new ObservableCollection<GameItem>
                 {
                     GameItemById(1002)
@@ -257,9 +317,10 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifiyExperiencePoints = 5,
                 ModifyForm = "Mole",
                 ModifyFormImg = "Images/mole3.png",
-                ModifyChamberColor = "DarkGray",
+                ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "165",
                 ModifyMapLocatorLeft = "230",
+                ModifyLocationMessage = "The Mysterious villager stares into your soul... spooky",
                 ModifyPlayerMessage = "",
                 GameItems = new ObservableCollection<GameItem>
                 {
@@ -275,11 +336,16 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifiyExperiencePoints = 5,
                 ModifyForm = "Mole",
                 ModifyFormImg = "Images/mole3.png",
-                ModifyChamberColor = "DarkGray",
+                ModifyChamberColor = "Black",
                 ModifyMapLocatorTop = "160",
                 ModifyMapLocatorLeft = "250",
+                ModifyLocationMessage = "May I help you?",
                 ModifyPlayerMessage = "",
                 RequiredRareItemID = 2003,
+                NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(1002)
+                }
 
             };
             gameMap.MapLocations[2, 9] = new Location()
@@ -294,6 +360,7 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "DarkSlateGray",
                 ModifyMapLocatorTop = "160",
                 ModifyMapLocatorLeft = "275",
+                ModifyLocationMessage = "The Villagers regard you indifferently",
                 ModifyPlayerMessage = ""
             };
             gameMap.MapLocations[1, 9] = new Location()
@@ -308,6 +375,7 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "DarkSlateGray",
                 ModifyMapLocatorTop = "140",
                 ModifyMapLocatorLeft = "275",
+                ModifyLocationMessage = "There seem to be even more villagers than before",
                 ModifyPlayerMessage = ""
 
             };
@@ -323,6 +391,7 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "DarkSlateGray",
                 ModifyMapLocatorTop = "140",
                 ModifyMapLocatorLeft = "300",
+                ModifyLocationMessage = "You still find nothing",
                 ModifyPlayerMessage = "",
                 GameItems = new ObservableCollection<GameItem>
                 {
@@ -341,6 +410,7 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "DarkSlateGray",
                 ModifyMapLocatorTop = "160",
                 ModifyMapLocatorLeft = "300",
+                ModifyLocationMessage = "The path exiting the Burrow is up ahead",
                 ModifyPlayerMessage = "",
                 GameItems = new ObservableCollection<GameItem>
                 {
@@ -359,6 +429,7 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyChamberColor = "DarkSlateGray",
                 ModifyMapLocatorTop = "163",
                 ModifyMapLocatorLeft = "325",
+                ModifyLocationMessage = "A figure beckons you over.He has... questions",
                 ModifyPlayerMessage = ""
             };
             gameMap.MapLocations[2, 12] = new Location()
@@ -366,14 +437,19 @@ namespace Subterra_Quest_Game.DataLayer
                 Id=19,
                 Name = "Crossroads",
                 Description = "The figure points. I think he wants you to go that way",
-                Accessible = true,
+                Accessible = false,
                 ModifiyExperiencePoints =5,
                 ModifyForm = "Bunny",
                 ModifyFormImg = "Images/bunny.png",
                 ModifyChamberColor = "DarkSlateGray",
                 ModifyMapLocatorTop = "167",
                 ModifyMapLocatorLeft = "355",
-                ModifyPlayerMessage = ""
+                ModifyLocationMessage = "The figure points. I think he wants you to go that way",
+                ModifyPlayerMessage = "",
+                NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(1002)
+                }
             };
             gameMap.MapLocations[3, 12] = new Location()
             {
@@ -382,11 +458,12 @@ namespace Subterra_Quest_Game.DataLayer
                 Description = "You see a huge Geode looking golem monster!\n\n He is preparing to fight!",
                 Accessible = true,
                 ModifiyExperiencePoints = 0,
-                ModifyForm = "Bunny",
-                ModifyFormImg = "Images/bunny.png",
+                ModifyForm = "Jackalope",
+                ModifyFormImg = "Images/jackalope.png",
                 ModifyChamberColor = "DarkSlateGray",
                 ModifyMapLocatorTop = "190",
                 ModifyMapLocatorLeft = "375",
+                ModifyLocationMessage = "\nIt's dead.. or you're dead..\n Or somebody is about to die",
                 ModifyPlayerMessage = ""
             };
 
@@ -395,13 +472,14 @@ namespace Subterra_Quest_Game.DataLayer
                 Id=21,
                 Name = "Garden",
                 Description = "There's a farmer and he has a rake.\n He sees you...\n He moves towards you... \n He RUNS towards you.",
-                Accessible = false,
+                Accessible = true,
                 ModifiyExperiencePoints = 0,
                 ModifyForm = "Jackalope",
                 ModifyFormImg = "Images/jackalope.png",
                 ModifyChamberColor = "DarkSlateGray",
                 ModifyMapLocatorTop = "160",
                 ModifyMapLocatorLeft = "395",
+                ModifyLocationMessage = "\nIt's dead.. or you're dead..\n Or somebody is about to die",
                 ModifyPlayerMessage = "",
                 RequiredRareItemID = 2001
             };
@@ -409,16 +487,18 @@ namespace Subterra_Quest_Game.DataLayer
             return gameMap;
         }
 
+
         public static List<GameItem> StandardGameItems()
         {
             return new List<GameItem>()
             {
-                new Food(1001, "Worms", 10, Food.UseActionType.HEALPLAYER, "A pile of slimy wriggling worms. Yum!", 50 ,"They wiggle all the way down", "Images/unknownItem.jpg"),
+                new Food(1000, "Fuzzy Mint", 30, Food.UseActionType.HEALPLAYER, "Must have been \n in your pocket", 50 ,"\n You ate the mint! \nInteresting Texture...", "Images/unknownItem.jpg"),
+                new Food(1001, "Worms", 25, Food.UseActionType.HEALPLAYER, "A pile of slimy wriggling worms. Yum!", 50 ,"They wiggle all the way down", "Images/unknownItem.jpg"),
                 new Food(1002, "GoldWorms", 100, Food.UseActionType.HEALPLAYER, "A glittering golden pile of worms. So shiny!", 100, "Not bad!", "Images/unknownItem.jpg"),
-                new Food(1003, "Carrot", 15, Food.UseActionType.HEALPLAYER, "Bright orange and crunchy", 75, "hits the spot","Images/unknownItem,jpg"),
+                new Food(1003, "Carrot", 40, Food.UseActionType.HEALPLAYER, "Bright orange and crunchy", 75, "hits the spot","Images/unknownItem,jpg"),
                 new RareItem(2001, "Antlers of Jackalope", 1000, RareItem.RareList.Antlers, "Dangerous looking sharp pointy antlers fitted to a helmet.", 300, "You equip the helmet. Perfect fit and ready for battle!","Images/unknownItem,jpg"),
-                new RareItem(2002, "Mole Hair", 500, RareItem.RareList.MoleHair, "Fuzzy patch of hair", 100, "You transformed into a mole! \n\n Onward to Mole City!", "Images/unknownItem.jpg"),
-                new RareItem(2003, "Rabbit's Foot",1000, RareItem.RareList.RabbitFoot, "Looks used", 200,"You transformed!", "Images/unknownItem.jpg"),
+                new RareItem(2002, "Mole Hair", 500, RareItem.RareList.MoleHair, "Fuzzy patch of hair", 100, "\n Mole City is now Unlocked!", "Images/unknownItem.jpg"),
+                new RareItem(2003, "Rabbit's Foot",1000, RareItem.RareList.RabbitFoot, "Looks used", 200,"You can now enter Bunny Burrow!", "Images/unknownItem.jpg"),
                 new Weapon(3001, "Bite",10, Weapon.AttackList.bite, "Bite your enemy!", 10, "you bite your enemy!", "Images/unkownItem.jpg", 1, 5),
                 new Weapon(3002, "Claw",20, Weapon.AttackList.claw, "Claw your enemy!", 20, "you claw your enemy!", "Images/unkownItem.jpg", 3, 8),
                 new Weapon(3003, "Thump",30, Weapon.AttackList.thump, "Thump your enemy!", 30, "you thump your enemy!", "Images/unkownItem.jpg", 5, 10),
@@ -436,17 +516,76 @@ namespace Subterra_Quest_Game.DataLayer
                   Name = "Slimy Worm",
                   Race = Character.RaceType.Worm,
                   LocationId= 3,
-                  HealthPoints =5,
+                  Health =5,
                   Description = "A slimy, squirmy, wriggling worm. Seems mostly harmless",
-                  SkillLevel = 1,
+                  SkillLevel = 5,
                   Messages = new List<string>()
                   {
                     "The worm lunges at you",
-                    "The worm wriggles around"
+                    "The worm wriggles around",
+                    "Gross! stop that worm!"
+
+                  }
+               },
+               new Monster()
+               {
+                  ID = 2002,
+                  Name = "Huge Worm",
+                  Race = Character.RaceType.Worm,
+                  LocationId= 4,
+                  Health =15,
+                  Description = "An extra large worm \n Like... really big.",
+                  SkillLevel = 10,
+                  Messages = new List<string>()
+                  {
+                    "The worm bites at you! \n It has teeth!?",
+                    "The worm lets out a terrible scream",
+                    "It charges at you!"
 
                   }
                },
 
+               new Citizen()
+               {
+                  ID = 9999,
+                  Name = "Tutorial",
+                  Race = Character.RaceType.Human,
+                  Description = "Speak to me for game instructions",
+                  Messages = new List<string>()
+                  {
+                   "Press the 'Enter Underground' to begin the game." +
+                   "\n You will be transformed into a beetle." +
+                   "\n Fight your way through the map changing forms until"+
+                   "\n you reach the final boss.",
+                   "Throughout the map you will find monsters, items and NPCs"+
+                   "\n Interactions with monster, items, and NPCs is located"+
+                   "\n on the upper right corner of the UI.",
+                   "\n Press 'Enter Underground' when you are ready to begin!"
+
+                  }
+               },
+               new Citizen()
+               {
+                  ID = 1000,
+                  Name = "Cave Guide",
+                  Race = Character.RaceType.Human,
+                  Description = "You hear a voice. It's too dark to see anything",
+                  Messages = new List<string>()
+                  {
+                   "Hello? Who is there? \n You are stuck in the underground now." +
+                   "\n The only way out is to head East towards Mole City." +
+                   "\n Before you can do that you must find something special.",
+                   "\nIt was a mistake comming here...",
+                   "\nNow you must make your way through the underground.",
+                   "You should gain experience before going forward." +
+                   "\nTry killing some worms for starters." +
+                   "\n Fine tune your abilities by spending skill points.",
+                   "\nStrength will make you do more damage." +
+                   "\nStamina will make you take less damage.",
+                   "\nA dangerous battle awaits you.",
+                   "\nYou must prepare for the inevitable."
+                  }
+               },
                new Citizen()
                {
                   ID = 1001,
@@ -456,7 +595,8 @@ namespace Subterra_Quest_Game.DataLayer
                   Messages = new List<string>()
                   {
                    "Excuse me, but are you looking for something.",
-                   "You requre a special item to pass"
+                   "You requre a special item to pass",
+                   "Have you seen a small patch of fur?"
                   }
                },
 
@@ -469,10 +609,65 @@ namespace Subterra_Quest_Game.DataLayer
                    Messages = new List<string>()
                    {
                     "Excuse me, but are you looking for something.",
-                    "You requre a special item to pass"
+                    "You requre a special item to pass",
+                    "I've lost my lucky rabbits foot"
+                   }
+               },
+                  new Citizen()
+               {
+                   ID = 1003,
+                   Name = "Crossroads Keeper",
+                   Race = Character.RaceType.Human,
+                   Description = "Shadowy figure",
+                   Messages = new List<string>()
+                   {
+                    "It's much to dangerous. Turn Around",
+                    "You can't battle the boss without a helmet!"
                    }
                }
            };
+        }
+
+        public static List<Quest> Quests()
+        {
+            return new List<Quest>()
+            {
+                new QuestTravel()
+                {
+                    Id = 1,
+                    Name = "Scouting",
+                    Description = "Explore all locations and gather all information possible.",
+                    Status = Quest.QuestStatus.Incomplete,
+                    RequiredLocations = new List<Location>()
+                    {
+                        
+                        LocationById(7),
+                        LocationById(9),
+                        LocationById(13),
+                        LocationById(15)
+                   
+                    },
+                    ExperiencePoints = 300
+                },
+
+               
+                new QuestEngage()
+                {
+                    Id = 2,
+                    Name = "Locate",
+                    Description = "Locate and speak to all required persons.",
+                    Status = Quest.QuestStatus.Incomplete,
+                    RequiredNpcs = new List<NPC>()
+                    {
+                        NpcById(1000),
+                        NpcById(1001),
+                        NpcById(1002)
+                    },
+                    ExperiencePoints = 100
+                },
+
+            };
+
         }
     }
 

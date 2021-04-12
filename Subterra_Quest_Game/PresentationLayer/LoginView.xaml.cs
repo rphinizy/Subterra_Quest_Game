@@ -35,17 +35,48 @@ namespace Subterra_Quest_Game.PresentationLayer
 
         private void SetupWindow()
         {
+            //List<string> races = Enum.GetNames(typeof(Player.RaceType)).ToList();
+            //List<string> jobTitles = Enum.GetNames(typeof(Player.JobTitleName)).ToList();
             //List<string> colors = Enum.GetNames(typeof(Player.ColorType)).ToList();
             //PlayerColor.ItemsSource = colors;
         }
       
         private void EnterGame_Click(object sender, RoutedEventArgs e)
+           
         {
-            _player.Name = PlayerName.Text;
-            //Enum.TryParse(PlayerColor.SelectionBoxItem.ToString(), out Player.ColorType color);
-            this.Hide();
+            string errorMessage;
 
-            //_player.Color = color;
+            if(IsValidInput(out errorMessage))
+            {
+                _player.Name = PlayerName.Text;
+                //Enum.TryParse(PlayerColor.SelectionBoxItem.ToString(), out Player.ColorType color);
+                this.Hide();
+
+                //_player.Color = color;
+            }
+            else
+            {
+                //
+                // display error messages
+                //
+                ErrorMessageTextBlock.Visibility = Visibility.Visible;
+                ErrorMessageTextBlock.Text = errorMessage;
+            }
+
+        }
+        private bool IsValidInput(out string errorMessage)
+        {
+            errorMessage = "";
+
+            if (PlayerName.Text == "" || PlayerName.Text == "Enter a Name")
+            {
+                errorMessage += "Player Name is required.\n";
+            }
+            else
+            {
+                _player.Name = PlayerName.Text;
+            }
+            return errorMessage == "" ? true : false;
         }
 
         private void addDEF_Click(object sender, RoutedEventArgs e)
@@ -73,7 +104,7 @@ namespace Subterra_Quest_Game.PresentationLayer
         {
             if (_player.StatPoints > 0)
             {
-                _player.HealthPoints = _player.HealthPoints + 1;
+                _player.Health = _player.Health + 1;
                 _player.StatPoints = _player.StatPoints - 1;
             }
         }

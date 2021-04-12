@@ -31,15 +31,7 @@ namespace Subterra_Quest_Game.PresentationLayer
 
         private void SetupWindow()
         {
-            ////
-            ///OMG HOW DO I GET THIS ENUM PROPERTY INTO A CONTROL BINDING ARRRGHHHHHH!!!!!
-            ///
-            // Enum.GetName(typeof(_gameInterfaceViewModel.Player.Color)).ToString();
-            // Enum.TryParse(_gameInterfaceViewModel.Player.Color.ToString();
-            // playerIcon.Background = _gameInterfaceViewModel.Player.Color;
-            // questText.Background=
-            // List<string> colors = Enum.GetNames(typeof(Player.ColorType)).ToList();
-            //PlayerColor.ItemsSource = colors;
+            
             _gameInterfaceViewModel.InitialLocation();
 
         }
@@ -126,6 +118,7 @@ namespace Subterra_Quest_Game.PresentationLayer
             }
         }
 
+        //remove method
         private void DefendButton_Click(object sender, RoutedEventArgs e)
         {
             if (LocationNpcsDataGrid.SelectedItem != null)
@@ -133,7 +126,7 @@ namespace Subterra_Quest_Game.PresentationLayer
                 _gameInterfaceViewModel.OnPlayerDefend();
             }
         }
-
+        //remove method
         private void RetreatButton_Click(object sender, RoutedEventArgs e)
         {
             if (LocationNpcsDataGrid.SelectedItem != null)
@@ -142,5 +135,9 @@ namespace Subterra_Quest_Game.PresentationLayer
             }
         }
 
+        private void QuestStatus_Click(object sender, RoutedEventArgs e)
+        {
+            _gameInterfaceViewModel.OpenQuestView();
+        }
     }
 }

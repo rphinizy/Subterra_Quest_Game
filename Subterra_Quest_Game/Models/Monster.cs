@@ -30,8 +30,8 @@ namespace Subterra_Quest_Game.Models
         {
 
         }
-        public Monster(int id, string name, RaceType race, int locationId, int healthpoints, string description, int skillLevel, List<string> messages, Weapon currentWeapon)
-              : base(id, name, race, locationId, healthpoints, description)
+        public Monster(int id, string name, RaceType race, int locationId, int health, string description, int skillLevel, List<string> messages, Weapon currentWeapon)
+              : base(id, name, race, locationId, health, description)
         {
             SkillLevel = skillLevel;
             Messages = messages;
@@ -59,7 +59,7 @@ namespace Subterra_Quest_Game.Models
 
         public int Attack()
         {
-            int hitPoints = random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage) * SkillLevel;
+            int hitPoints = random.Next(1, 3)*SkillLevel;
 
             if (hitPoints <= 100)
             {
@@ -73,7 +73,7 @@ namespace Subterra_Quest_Game.Models
 
         public int Retreat()
         {
-            int hitPoints = SkillLevel * MAXIMUM_RETREAT_DAMAGE;
+            int hitPoints = SkillLevel;
 
             if (hitPoints <= 100)
             {
@@ -87,7 +87,7 @@ namespace Subterra_Quest_Game.Models
 
         public int Defend()
         {
-            int hitPoints = (random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage) * SkillLevel) - DEFENDER_DAMAGE_ADJUSTMENT;
+            int hitPoints = (random.Next(0, 4) * SkillLevel);
 
             if (hitPoints >= 0 && hitPoints <= 100)
             {

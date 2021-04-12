@@ -47,7 +47,9 @@ namespace Subterra_Quest_Game.Models
         public string Description
         {
             get { return _description; }
-            set { _description = value; }
+            set { _description = value;
+                OnPropertyChanged(nameof(Description));
+            }
         }
 
 
@@ -75,12 +77,16 @@ namespace Subterra_Quest_Game.Models
         public string ModifyPlayerMessage
         {
             get { return _modifyPlayerMessage; }
-            set { _modifyPlayerMessage = value; }
+            set { _modifyPlayerMessage = value;
+                OnPropertyChanged(nameof(ModifyPlayerMessage));
+            }
         }
         public string ModifyLocationMessage
         {
             get { return _modifyLocationMessage; }
-            set { _modifyLocationMessage = value; }
+            set { _modifyLocationMessage = value;
+                OnPropertyChanged(nameof(ModifyLocationMessage));
+            }
         }
         public string ModifyChamberColor
         {

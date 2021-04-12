@@ -24,6 +24,11 @@
             </Border>
             <TextBox x:Name="PlayerName" Width="120" Height ="23" Margin="10,30,10,10"
                      FontSize="15" Text="Enter a Name"  TextAlignment="Center"></TextBox>
+
+            <TextBlock  VerticalAlignment="Bottom" Margin="0,40,0,0" TextAlignment="Center"
+                    Name="ErrorMessageTextBlock"
+                    Background="WhiteSmoke"
+                    Foreground="Red"/>
             <!--<Grid>
                 <ComboBox x:Name="PlayerColor" Grid.Row="0" Grid.Column="0" Width="120" Background="Black" Foreground="black" Text="Choose Color" HorizontalAlignment="Center" VerticalAlignment="Center">
                     

@@ -13,6 +13,12 @@ namespace Subterra_Quest_Game.PresentationLayer
 {
     public class GameInterfaceViewModel : ObservableObject
     {
+        #region CONSTANTANTS
+
+        const string TAB = "\t";
+        const string NEW_LINE = "\n";
+
+        #endregion
         #region FIELDS
         private Player _player;
         private List<string> _messages;
@@ -204,6 +210,7 @@ namespace Subterra_Quest_Game.PresentationLayer
         private void OnPlayerMove()
         {
             CheckPlayerExperience();
+           // _player.UpdateInventoryCategories();
             // 
             // update player stats when in new location
             //
@@ -219,20 +226,24 @@ namespace Subterra_Quest_Game.PresentationLayer
                 //
                  _player.Experience += _currentLocation.ModifiyExperiencePoints;
 
-                //
-                // update health
-                //
-                //_player.Health += _currentLocation.ModifyHealth;
-
-                // CurrentLocation = _gameMap.CurrentLocation;
             }
+            //changes player form based on location. Form property bound in xaml
             _player.Form = _currentLocation.ModifyForm;
+
+            //changes player form source image based on current location. player icon img xaml src is bound to FormImg property
             _player.FormImg = _currentLocation.ModifyFormImg;
+
+            //changes player message base on current location. Message property bound in xaml
             _player.PlayerMessage = _currentLocation.ModifyPlayerMessage;
+
+            //changes the current location description to the modified message. xaml bound to Description Property
+            _currentLocation.Description = _currentLocation.ModifyLocationMessage;
+          
             
-            
-            
-            
+
+
+
+
         }
 
         public void MoveNorth()
@@ -241,6 +252,7 @@ namespace Subterra_Quest_Game.PresentationLayer
             CurrentLocation = _gameMap.CurrentLocation;
             OnPlayerMove();
             CheckPlayerExperience();
+            _player.UpdateMissionStatus();
         }
         public void MoveEast()
         {
@@ -254,6 +266,7 @@ namespace Subterra_Quest_Game.PresentationLayer
             
             OnPlayerMove();
             CheckPlayerExperience();
+            _player.UpdateMissionStatus();
         }
 
         
@@ -264,6 +277,8 @@ namespace Subterra_Quest_Game.PresentationLayer
             CurrentLocation = _gameMap.CurrentLocation;
             OnPlayerMove();
             CheckPlayerExperience();
+            
+            _player.UpdateMissionStatus();
 
 
 
@@ -276,6 +291,7 @@ namespace Subterra_Quest_Game.PresentationLayer
             CurrentLocation = _gameMap.CurrentLocation;
             OnPlayerMove();
             CheckPlayerExperience();
+            _player.UpdateMissionStatus();
         }
 
         public void MoveStart()
@@ -284,6 +300,131 @@ namespace Subterra_Quest_Game.PresentationLayer
             CurrentLocation = _gameMap.CurrentLocation;
             OnPlayerMove();
             CheckPlayerExperience();
+            _player.UpdateMissionStatus();
+        }
+
+        public void OpenQuestView()
+        {
+            QuestView questView = new QuestView(InitializeQuestViewModel());
+
+            questView.Show();
+        }
+
+        /// <summary>
+        /// initialize all property values for the mission status view model
+        /// </summary>
+        /// <returns>mission status view model</returns>
+        private QuestViewModel InitializeQuestViewModel()
+        {
+           QuestViewModel questViewModel = new QuestViewModel();
+
+            questViewModel.QuestInformation = GenerateQuestInformation();
+
+           questViewModel.Quests = new List<Quest>(_player.Quests);
+            foreach (Quest quest in questViewModel.Quests)
+            {
+                if (quest is QuestTravel)
+                    quest.StatusDetail = GenerateQuestTravelDetail((QuestTravel)quest);
+
+                if (quest is QuestEngage)
+                    quest.StatusDetail = GenerateQuestEngageDetail((QuestEngage)quest);
+            }
+
+            return questViewModel;
+        }
+
+        /// <summary>
+        /// generate the mission status information text based on percentage of missions completed
+        /// </summary>
+        /// <returns>mission status information text</returns>
+        private string GenerateQuestInformation()
+        {
+            string missionStatusInformation;
+
+            double totalMissions = _player.Quests.Count();
+            double missionsCompleted = _player.Quests.Where(m => m.Status == Quest.QuestStatus.Complete).Count();
+
+            int percentMissionsCompleted = (int)((missionsCompleted / totalMissions) * 100);
+            missionStatusInformation = $"Missions Complete: {percentMissionsCompleted}%" + NEW_LINE;
+
+            if (percentMissionsCompleted == 0)
+            {
+                missionStatusInformation += "Looks like you are just starting out. No missions complete at this point and you better get on it!";
+            }
+            else if (percentMissionsCompleted <= 33)
+            {
+                missionStatusInformation += "Well, you have some of your missions complete, but this is just a start. You have your work cut out for you for sure.";
+            }
+            else if (percentMissionsCompleted <= 66)
+            {
+                missionStatusInformation += "You are making great progress with your missions. Keep at it.";
+            }
+            else if (percentMissionsCompleted == 100)
+            {
+                missionStatusInformation += "Congratulations, you have completed all missions assigned to you.";
+            }
+
+            return missionStatusInformation;
+        }
+
+        /// <summary>
+        /// generate the text for an engage mission detail
+        /// </summary>
+        /// <param name="mission">the mission</param>
+        /// <returns>mission detail text</returns>
+        private string GenerateQuestEngageDetail(QuestEngage quest)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Clear();
+
+            sb.AppendLine("All Required NPCs");
+            foreach (var location in quest.RequiredNpcs)
+            {
+                sb.AppendLine(TAB + location.Name);
+            }
+
+            if (quest.Status == Quest.QuestStatus.Incomplete)
+            {
+                sb.AppendLine("NPCs Yet to Engage");
+                foreach (var location in quest.NpcsNotCompleted(_player.NpcsEngaged))
+                {
+                    sb.AppendLine(TAB + location.Name);
+                }
+            }
+
+            sb.Remove(sb.Length - 2, 2); // remove the last two characters that generate a blank line
+
+            return sb.ToString(); ;
+        }
+
+        /// <summary>
+        /// generate the text for a travel mission detail
+        /// </summary>
+        /// <param name="mission">the mission</param>
+        /// <returns>mission detail text</returns>
+        private string GenerateQuestTravelDetail(QuestTravel quest)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Clear();
+
+            sb.AppendLine("All Required Locations");
+            foreach (var location in quest.RequiredLocations)
+            {
+                sb.AppendLine(TAB + location.Name);
+            }
+
+            if (quest.Status == Quest.QuestStatus.Incomplete)
+            {
+                sb.AppendLine("Locations Yet to Visit");
+                foreach (var location in quest.LocationsNotCompleted(_player.LocationsVisited))
+                {
+                    sb.AppendLine(TAB + location.Name);
+                }
+            }
+
+            sb.Remove(sb.Length - 2, 2); // remove the last two characters that generate a blank line
+
+            return sb.ToString(); ;
         }
 
         #endregion
@@ -309,6 +450,7 @@ namespace Subterra_Quest_Game.PresentationLayer
             }
 
             CheckPlayerExperience();
+           // _player.UpdateInventoryCategories();
         }
         public void RemoveItemFromInventory()
         {
@@ -329,6 +471,7 @@ namespace Subterra_Quest_Game.PresentationLayer
                 //OnPlayerPutDown(selectedGameItem);
             }
             CheckPlayerExperience();
+            //_player.UpdateInventoryCategories();
         }
 
         private void OnPlayerPickUp(GameItem selectedGameItem)
@@ -357,7 +500,6 @@ namespace Subterra_Quest_Game.PresentationLayer
                 default:
                     break;
             }
-            CheckPlayerExperience();
         }
 
         private void FoodUse(Food food)
@@ -366,34 +508,36 @@ namespace Subterra_Quest_Game.PresentationLayer
             switch (food.UseAction)
             {
                 case Food.UseActionType.HEALPLAYER:
-                    _player.HealthPoints += food.Value;
+                    _player.Health += food.Value;
+                    _player.RemoveGameItemFromInventory(_currentGameItem);
                     break;
                 case Food.UseActionType.POISONPLAYER:
-                    _player.HealthPoints -= food.Value;
+                    _player.Health -= food.Value;
+                    _player.RemoveGameItemFromInventory(_currentGameItem);
                     break;
             }
-            _player.PlayerMessage = _currentGameItem.UseMessage;
-            _player.RemoveGameItemFromInventory(_currentGameItem);
-            //CheckPlayerExperience();
+            if (_currentGameItem !=null)
+            {
+                _player.PlayerMessage = _currentGameItem.UseMessage;
+                _player.RemoveGameItemFromInventory(_currentGameItem);
+            }
+            
         }
 
         private void RareItemUse(RareItem rareItem)
         {
-            //_currentLocation.Description = "The figure watches as you fiddle with the curious item";
-            _gameMap.OpenLocationsByRareItem(rareItem.ID);
-            // add bool property to player rare item for equiped item or not. 
-            _player.PlayerMessage = _currentLocation.Message;
-            _player.RemoveGameItemFromInventory(_currentGameItem);
-            
-            OnPlayerMove();
-            CheckPlayerExperience();
+           
+            if (_currentLocation.Accessible == false)
+            {
+                _player.PlayerMessage = _currentGameItem.UseMessage;
+                _gameMap.OpenLocationsByRareItem(rareItem.ID);
+                _player.RemoveGameItemFromInventory(_currentGameItem);
+            }
+            else
+            {
+                _player.PlayerMessage = "\nYou cannot use that item here!";
+            }
         }
-
-
-        //private void OnPlayerPutDown(GameItem gameItem)
-        //{
-        //_player.Wealth -= gameItem.Value;
-        //}
 
         private void OnPlayerDies(string message)
         {
@@ -423,6 +567,8 @@ namespace Subterra_Quest_Game.PresentationLayer
                 CurrentLocationInformation = speakingNpc.Speak();
             }
             CheckPlayerExperience();
+            _player.NpcsEngaged.Add(_currentNpc);
+            _player.UpdateMissionStatus();
         }
 
         public void OnPlayerAttack()
@@ -472,30 +618,24 @@ namespace Subterra_Quest_Game.PresentationLayer
             if (_currentNpc is IBattle)
             {
                 IBattle battleNpc = _currentNpc as IBattle;
-                int playerHitPoints = 0;
-                int battleNpcHitPoints = 0;
+                int playerHitPoints = _player.Health;
+                int battleNpcHitPoints =_currentNpc.Health;
                 string battleInformation = "";
 
                 //
                 // calculate hit points if the player and NPC have weapons
                 //
-                if (_player.CurrentWeapon != null)
-                {
-                    playerHitPoints = CalculatePlayerHitPoints();
-                }
-                else
-                {
-                    battleInformation = "It appears you are entering into battle without a weapon." + Environment.NewLine;
-                }
+               
+               
+                playerHitPoints = CalculatePlayerHitPoints();
+               
+               
 
-                if (battleNpc.CurrentWeapon != null)
-                {
-                    battleNpcHitPoints = CalculateNpcHitPoints(battleNpc);
-                }
-                else
-                {
-                    battleInformation = $"It appears you are entering into battle with {_currentNpc.Name} who has no weapon." + Environment.NewLine;
-                }
+              
+                
+                battleNpcHitPoints = CalculateNpcHitPoints(battleNpc);
+                
+                
 
                 //
                 // build out the text for the current location information
@@ -507,19 +647,20 @@ namespace Subterra_Quest_Game.PresentationLayer
                 //
                 // determine results of battle
                 //
-                if (playerHitPoints >= battleNpcHitPoints)
+                if (_currentNpc.Health <= 0)
                 {
                     battleInformation += $"You have slain {_currentNpc.Name}.";
                     _currentLocation.NPCS.Remove(_currentNpc);
+                    _player.Experience += 25;
                 }
-                else
-                {
-                    battleInformation += $"You have been slain by {_currentNpc.Name}.";
+                //else
+                //{
+                    //battleInformation += $"You have been slain by {_currentNpc.Name}.";
                     //_player.Lives--;
-                }
+                //}
 
                 CurrentLocationInformation = battleInformation;
-                if (_player.HealthPoints <= 0) OnPlayerDies("You have been slain and have no lives left.");
+                if (_player.Health <= 0) OnPlayerDies("You have been slain and have no lives left.");
             }
             else
             {
@@ -528,9 +669,10 @@ namespace Subterra_Quest_Game.PresentationLayer
             }
 
         }
+
         private BattleModeName NpcBattleResponse()
         {
-            BattleModeName npcBattleResponse = BattleModeName.RETREAT;
+            BattleModeName npcBattleResponse = BattleModeName.ATTACK;
 
             switch (DieRoll(3))
             {
@@ -538,10 +680,10 @@ namespace Subterra_Quest_Game.PresentationLayer
                     npcBattleResponse = BattleModeName.ATTACK;
                     break;
                 case 2:
-                    npcBattleResponse = BattleModeName.DEFEND;
+                    npcBattleResponse = BattleModeName.ATTACK;
                     break;
                 case 3:
-                    npcBattleResponse = BattleModeName.RETREAT;
+                    npcBattleResponse = BattleModeName.ATTACK;
                     break;
             }
             return npcBattleResponse;
@@ -555,6 +697,7 @@ namespace Subterra_Quest_Game.PresentationLayer
             {
                 case BattleModeName.ATTACK:
                     playerHitPoints = _player.Attack();
+                    _currentNpc.Health -= playerHitPoints;
                     break;
                 case BattleModeName.DEFEND:
                     playerHitPoints = _player.Defend();
@@ -575,6 +718,7 @@ namespace Subterra_Quest_Game.PresentationLayer
             {
                 case BattleModeName.ATTACK:
                     battleNpcHitPoints = battleNpc.Attack();
+                    _player.Health -=battleNpcHitPoints;
                     break;
                 case BattleModeName.DEFEND:
                     battleNpcHitPoints = battleNpc.Defend();

@@ -18,7 +18,7 @@ namespace Subterra_Quest_Game.Models
 
         public RareList Item { get; set; }
 
-        public RareItem (int id, string name, int value, RareList item, string description, int experience, string useMessage, string itemIcon ="")
+        public RareItem (int id, string name, int value, RareList item, string description, int experience, string useMessage, string itemIcon)
                     :base(id, name, value, description, experience, useMessage, itemIcon)
 
         {

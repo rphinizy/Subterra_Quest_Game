@@ -68,6 +68,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PresentationLayer\QuestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLayer\GameData.cs" />
@@ -84,6 +88,10 @@
     <Compile Include="Models\Monster.cs" />
     <Compile Include="Models\NPC.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Quest.cs" />
+    <Compile Include="Models\QuestEngage.cs" />
+    <Compile Include="Models\QuestGather.cs" />
+    <Compile Include="Models\QuestTravel.cs" />
     <Compile Include="Models\RareItem.cs" />
     <Compile Include="Models\Weapon.cs" />
     <Compile Include="ObservableObject.cs" />
@@ -94,6 +102,10 @@
     <Compile Include="PresentationLayer\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PresentationLayer\QuestView.xaml.cs">
+      <DependentUpon>QuestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayer\QuestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

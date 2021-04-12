@@ -22,14 +22,14 @@ namespace Subterra_Quest_Game.Models
             }
         }
 
-        public NPC(int id, string name, RaceType race, int locationId, int healthPoints, string description)
-            : base(id, name, race, locationId, healthPoints)
+        public NPC(int id, string name, RaceType race, int locationId, int health, string description)
+            : base(id, name, race, locationId, health)
         {
             ID = id;
             Name = name;
             Race = race;
             LocationId = locationId;
-            HealthPoints = healthPoints;
+            Health = health;
             Description = description;
         }
 

@@ -25,7 +25,7 @@ namespace Subterra_Quest_Game.Models
         #region FIELDS
 
         protected int _id;
-        protected int _healthPoints;
+        protected int _health;
         protected string _name;
         protected int _locationId;
         protected RaceType _race;
@@ -44,10 +44,12 @@ namespace Subterra_Quest_Game.Models
             set { _id = value; }
         }
 
-        public int HealthPoints
+        public int Health
         {
-            get { return _healthPoints; }
-            set { _healthPoints = value; }
+            get { return _health; }
+            set { _health = value;
+                OnPropertyChanged(nameof(Health));
+            }
         }
 
         public string Name
@@ -84,15 +86,22 @@ namespace Subterra_Quest_Game.Models
 
         }
 
-        public Character(int id, string name, RaceType race, int locationId, int healthPoints)
+        public Character(int id, string name, RaceType race, int locationId, int health)
         {
             _id = id;
             _name = name;
             _race = race;
             _locationId = locationId;
-            _healthPoints = healthPoints;
+            _health = health;
         }
 
+        public Character(string name, RaceType race, int health)
+        {
+          
+            _name = name;
+            _race = race;
+            _health = health;
+        }
         #endregion
 
         #region METHODS

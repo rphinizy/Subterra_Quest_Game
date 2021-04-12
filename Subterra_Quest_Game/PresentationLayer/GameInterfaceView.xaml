@@ -41,6 +41,17 @@
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="35,0,0,0">
 
                     <StackPanel Orientation="Vertical">
+                        <Border BorderThickness="5" 
+                        BorderBrush="SaddleBrown"
+                        CornerRadius="8"
+                        
+                        Width="100">
+                            <Button 
+                            Background="RosyBrown"
+                            Content="Mission Status" 
+                            
+                            Click="QuestStatus_Click"/>
+                        </Border>
                         <Label x:Name="Name"
                            Content="Name:"
                            Margin="0,20,0,0"
@@ -112,18 +123,6 @@
                                 Height="25"
                                 Content="Attack" 
                                 Click="AttackButton_Click"/>
-                        </Border>
-                        <Border BorderBrush="Blue" BorderThickness="3" CornerRadius="8" Height="30" Width="55" Margin="0,0,0,3">
-                            <Button
-                                Width="50"
-                                Height="25"
-                                Content="Defend" 
-                                Click="DefendButton_Click"/>
-                        </Border>
-                        <Border BorderBrush="Goldenrod" BorderThickness="3" CornerRadius="8" Height="30" Width="55" Margin="0,0,0,3">
-                            <Button 
-                                Content="Retreat"
-                                Click="RetreatButton_Click"/>
                         </Border>
                     </StackPanel>
                     </StackPanel>
@@ -280,14 +279,15 @@
                            FontFamily="Comic Sans MS"
                            HorizontalAlignment="Center">
                     </Label>
-                    <TextBox x:Name="healthBox"
+                    <TextBox 
                              FontSize="18"
                              FontFamily="Comic Sans MS"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Center"
                              Width="37"
-                             Text="{Binding Player.HealthPoints}">
+                             Text="{Binding Player.Health}">
                     </TextBox>
+                   
                     <Label x:Name ="Defence"
                            Margin="20,0,0,0"
                            Content="DEF"
@@ -400,7 +400,7 @@
                                      x:Name="FoodTabItem">
                                 <DataGrid  Height="190" Width="180"
                             x:Name="FoodDataGrid"
-                            ItemsSource="{Binding Player.Inventory}"
+                            ItemsSource="{Binding Player.Food}"
                             SelectedItem="{Binding CurrentGameItem}"
                             AutoGenerateColumns="False"
                             HeadersVisibility="Column">
@@ -415,22 +415,7 @@
                                      x:Name="RareTabItem">
                                 <DataGrid  Height="190" Width="180"
                             x:Name="RareDataGrid"
-                            ItemsSource="{Binding Player.Inventory}"
-                            SelectedItem="{Binding CurrentGameItem}"
-                            AutoGenerateColumns="False"
-                            HeadersVisibility="Column">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Name"
-                                                Binding="{Binding Name, Mode=OneWay}"
-                                                Width="*"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </TabItem>
-                            <TabItem Header="Attacks"
-                                     x:Name="AttackTabItem">
-                                <DataGrid  Height="190" Width="180"
-                            x:Name="AttackDataGrid"
-                            ItemsSource="{Binding Player.Inventory}"
+                            ItemsSource="{Binding Player.RareItem}"
                             SelectedItem="{Binding CurrentGameItem}"
                             AutoGenerateColumns="False"
                             HeadersVisibility="Column">
