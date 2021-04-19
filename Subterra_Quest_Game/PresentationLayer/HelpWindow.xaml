@@ -1,0 +1,75 @@
+﻿<Window x:Class="Subterra_Quest_Game.PresentationLayer.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Subterra_Quest_Game.PresentationLayer"
+        mc:Ignorable="d"
+        Title="HelpWindow" Height="465" Width="700">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/background2.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <StackPanel Margin="50,10,50,30" HorizontalAlignment="Center">
+
+            <Label
+            HorizontalAlignment="Center"
+            Margin="10"
+            FontStyle="Italic"
+            Foreground="DarkRed"
+            FontWeight="Bold"
+            FontSize="36"
+            Content="Help Menu"/>
+
+            <TextBlock TextAlignment="Center"
+            Text="Press the 'Enter Underground' button to begin the game."
+            Margin="0,25,0,0"
+            FontSize="18"
+            FontWeight="Bold"
+             Foreground="Black"/>
+            <TextBlock TextAlignment="Center"
+            Text="Nagivate the map with the buttons on the lower-right of UI"
+            Margin="0,10,0,0"
+            FontSize="18"
+            FontWeight="Bold"
+             Foreground="Black"/>
+
+            <TextBlock TextAlignment="Center"
+            Text=" Fight your way through the map changing forms."
+            Margin="0,10,0,0"
+            FontSize="18"
+            FontWeight="Bold"
+             Foreground="Black"/>
+
+            <TextBlock TextAlignment="Center"
+            Text="Throughout the map you will find monsters, items and NPCs."
+            Margin="0,10,0,0"
+            FontSize="18"
+            FontWeight="Bold"
+             Foreground="Black"/>
+            <TextBlock TextAlignment="Center"
+            Text="Interact with items and NPCs from the upper right corner of the UI."
+            Margin="0,10,0,20"
+            FontSize="18"
+            FontWeight="Bold"
+             Foreground="Black"/>
+            <TextBlock TextAlignment="Center"
+            Text="Press 'Enter Underground' when you are ready to begin"
+            Margin="0,20,0,10"
+            FontSize="18"
+            FontWeight="Bold"
+             Foreground="Black"/>
+            <Border BorderThickness="5" 
+                    BorderBrush="SaddleBrown"
+                    CornerRadius="8"
+                    Width="150"
+                    Height="50"
+                    Margin="0,0,0,0">
+                <Button 
+                    Background="RosyBrown"
+                    Content="Close Window"     
+                    Click="Button_ExitButton_Click"/>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -106,7 +106,7 @@ namespace Subterra_Quest_Game.Models
 
         #region METHODS
         public abstract string DefaultGreeting();
-       
+
         #endregion
     }
 }

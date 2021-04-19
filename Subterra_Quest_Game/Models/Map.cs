@@ -132,7 +132,6 @@ namespace Subterra_Quest_Game.Models
 
         public void OpenLocationsByRareItem(int RareItemID)
         {
-          
            Location mapLocation = new Location();
 
             for (int row = 0; row < 5; row++)
@@ -143,21 +142,16 @@ namespace Subterra_Quest_Game.Models
 
                     if (mapLocation != null && mapLocation.RequiredRareItemID == RareItemID)
                     {
-                        //mapLocation.Accessible = true;
                         _mapLocations[_currentLocationCoordinates.Row, _currentLocationCoordinates.Column].Accessible = true;
                         mapLocation = _mapLocations[row, column];
-                        //mapLocation.Message=($"{mapLocation.Name} is now accessible.");
                         _mapLocations[_currentLocationCoordinates.Row, _currentLocationCoordinates.Column].Message=($"{mapLocation.Name} is now accessible.");
                         _mapLocations[_currentLocationCoordinates.Row, _currentLocationCoordinates.Column].Description= ($"The figure regards you warmly. \n\n Welcome to {mapLocation.Name}, friend!");
 
-
-                        //_currentLocationCoordinates.Column -= 1;
                     }
                 }
              
             }
-            //MoveEast();
-
+   
         }
         #endregion
     }

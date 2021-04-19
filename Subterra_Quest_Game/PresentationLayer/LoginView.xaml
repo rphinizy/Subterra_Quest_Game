@@ -24,30 +24,20 @@
             </Border>
             <TextBox x:Name="PlayerName" Width="120" Height ="23" Margin="10,30,10,10"
                      FontSize="15" Text="Enter a Name"  TextAlignment="Center"></TextBox>
-
+           
             <TextBlock  VerticalAlignment="Bottom" Margin="0,40,0,0" TextAlignment="Center"
                     Name="ErrorMessageTextBlock"
                     Background="WhiteSmoke"
                     Foreground="Red"/>
-            <!--<Grid>
-                <ComboBox x:Name="PlayerColor" Grid.Row="0" Grid.Column="0" Width="120" Background="Black" Foreground="black" Text="Choose Color" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    
-                </ComboBox>
-
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15,0,5,0"
-                    Content="Player Color" Foreground ="black" FontSize="14" Grid.Column="0" Grid.Row="0"/>
-
-            </Grid>
-          -->
- 
+          
             <Button x:Name="EnterGame" Content="ENTER" Width="70" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,80,0,0" Click="EnterGame_Click"></Button>
         </StackPanel>
 
 
         <Grid.Background>
-            <ImageBrush ImageSource="Images/background3.jpg" Stretch="UniformToFill"/>
+            <ImageBrush ImageSource="Images/background2.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
-        
+
 
     </Grid>
 </Window>

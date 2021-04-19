@@ -78,7 +78,10 @@ namespace Subterra_Quest_Game.PresentationLayer
                 OnPropertyChanged(nameof(CurrentLocationInformation));
             }
         }
-
+        public string MessageDisplay
+        {
+            get { return FormatMessagesForViewer(); }
+        }
         public NPC CurrentNpc
         {
             get { return _currentNpc; }
@@ -129,9 +132,23 @@ namespace Subterra_Quest_Game.PresentationLayer
             
         }
 
+        private string FormatMessagesForViewer()
+        {
+            List<string> lifoMessages = new List<string>();
+
+            for (int index = 0; index < _messages.Count; index++)
+            {
+                lifoMessages.Add($" " + _messages[index]);
+            }
+
+            lifoMessages.Reverse();
+
+            return string.Join("\n\n", lifoMessages);
+        }
+
 
         #region MOVEMETHODS
-      
+
         public void DEFStatPointClick()
         {
             if (Player.StatPoints > 0)
@@ -206,12 +223,37 @@ namespace Subterra_Quest_Game.PresentationLayer
                 }
 
             }
+            if (_player.SkillLevel == 7)
+            {
+                if (_player.Experience >= 1000)
+                {
+                    Player.StatPoints += 1;
+                    _player.SkillLevel += 1;
+                }
+
+            }
+            if (_player.SkillLevel == 8)
+            {
+                if (_player.Experience >= 1300)
+                {
+                    Player.StatPoints += 1;
+                    _player.SkillLevel += 1;
+                }
+
+            }
+
+            if (_player.SkillLevel == 9)
+            {
+                if (_player.Experience >= 1600)
+                {
+                    Player.StatPoints += 1;
+                    _player.SkillLevel += 1;
+                }
+            }
         }
         private void OnPlayerMove()
         {
             CheckPlayerExperience();
-           // _player.UpdateInventoryCategories();
-            // 
             // update player stats when in new location
             //
             if (!_player.HasVisited(_currentLocation))
@@ -239,11 +281,6 @@ namespace Subterra_Quest_Game.PresentationLayer
             //changes the current location description to the modified message. xaml bound to Description Property
             _currentLocation.Description = _currentLocation.ModifyLocationMessage;
           
-            
-
-
-
-
         }
 
         public void MoveNorth()
@@ -279,9 +316,6 @@ namespace Subterra_Quest_Game.PresentationLayer
             CheckPlayerExperience();
             
             _player.UpdateMissionStatus();
-
-
-
 
         }
         public void MoveWest()
@@ -508,6 +542,7 @@ namespace Subterra_Quest_Game.PresentationLayer
             switch (food.UseAction)
             {
                 case Food.UseActionType.HEALPLAYER:
+                    _player.PlayerMessage = "You used an Item! \n" + _currentGameItem.UseMessage;
                     _player.Health += food.Value;
                     _player.RemoveGameItemFromInventory(_currentGameItem);
                     break;
@@ -518,7 +553,6 @@ namespace Subterra_Quest_Game.PresentationLayer
             }
             if (_currentGameItem !=null)
             {
-                _player.PlayerMessage = _currentGameItem.UseMessage;
                 _player.RemoveGameItemFromInventory(_currentGameItem);
             }
             
@@ -605,7 +639,8 @@ namespace Subterra_Quest_Game.PresentationLayer
 
         private void ResetPlayer()
         {
-            Environment.Exit(0);
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
         }
         #endregion
 
@@ -719,6 +754,8 @@ namespace Subterra_Quest_Game.PresentationLayer
                 case BattleModeName.ATTACK:
                     battleNpcHitPoints = battleNpc.Attack();
                     _player.Health -=battleNpcHitPoints;
+                    _player.PlayerMessage ="You Blocked " +_player.Defense/2 +" Damage";
+                    _player.Health +=(_player.Defense)/2;
                     break;
                 case BattleModeName.DEFEND:
                     battleNpcHitPoints = battleNpc.Defend();

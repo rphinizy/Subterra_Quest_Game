@@ -44,6 +44,17 @@
                         <Border BorderThickness="5" 
                         BorderBrush="SaddleBrown"
                         CornerRadius="8"
+                        Margin="25"
+                        Width="100">
+                            <Button 
+                            Background="RosyBrown"
+                            Content="HELP" 
+                            
+                            Click="Button_HelpButton_Click"/>
+                        </Border>
+                        <Border BorderThickness="5" 
+                        BorderBrush="SaddleBrown"
+                        CornerRadius="8"
                         
                         Width="100">
                             <Button 

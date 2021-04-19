@@ -371,7 +371,7 @@ namespace Subterra_Quest_Game.Models
 
         public override string DefaultGreeting()
         {
-            return $"Hello, my name is {_name} and I am a {_race}.";
+            return $"Hello,  {_name} the {_race}. Please choose a character name.";
         }
 
         #endregion

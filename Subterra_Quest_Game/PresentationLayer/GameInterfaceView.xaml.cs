@@ -139,5 +139,11 @@ namespace Subterra_Quest_Game.PresentationLayer
         {
             _gameInterfaceViewModel.OpenQuestView();
         }
+
+        private void Button_HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            HelpWindow helpWindow = new HelpWindow();
+            helpWindow.ShowDialog();
+        }
     }
 }

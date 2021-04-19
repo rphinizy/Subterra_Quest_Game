@@ -42,9 +42,8 @@ namespace Subterra_Quest_Game.DataLayer
         {
             return new List<string>()
             {
-                "\n          Welcome to the subterranean world of creepy crawlies.",
-                "    Start your new life as a fierce ground beetle and fight monsters \n   Check the NPC tab for tutorial instructions. "
-                
+                "\nWelcome to Subterra!" +
+                "\n Choose a name to get started." 
             };
         }
 
@@ -361,7 +360,11 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyMapLocatorTop = "160",
                 ModifyMapLocatorLeft = "275",
                 ModifyLocationMessage = "The Villagers regard you indifferently",
-                ModifyPlayerMessage = ""
+                ModifyPlayerMessage = "",
+                GameItems = new ObservableCollection<GameItem>
+                {
+                    GameItemById(1004)
+                }
             };
             gameMap.MapLocations[1, 9] = new Location()
             {
@@ -376,7 +379,12 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyMapLocatorTop = "140",
                 ModifyMapLocatorLeft = "275",
                 ModifyLocationMessage = "There seem to be even more villagers than before",
-                ModifyPlayerMessage = ""
+                ModifyPlayerMessage = "",
+                
+                NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(2003)
+                }
 
             };
             gameMap.MapLocations[1, 10] = new Location()
@@ -448,7 +456,7 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyPlayerMessage = "",
                 NPCS = new ObservableCollection<NPC>
                 {
-                    NpcById(1002)
+                    NpcById(1003)
                 }
             };
             gameMap.MapLocations[3, 12] = new Location()
@@ -464,7 +472,11 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyMapLocatorTop = "190",
                 ModifyMapLocatorLeft = "375",
                 ModifyLocationMessage = "\nIt's dead.. or you're dead..\n Or somebody is about to die",
-                ModifyPlayerMessage = ""
+                ModifyPlayerMessage = "",
+                NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(2004)
+                }
             };
 
             gameMap.MapLocations[2, 13] = new Location()
@@ -481,7 +493,11 @@ namespace Subterra_Quest_Game.DataLayer
                 ModifyMapLocatorLeft = "395",
                 ModifyLocationMessage = "\nIt's dead.. or you're dead..\n Or somebody is about to die",
                 ModifyPlayerMessage = "",
-                RequiredRareItemID = 2001
+                RequiredRareItemID = 2001,
+                NPCS = new ObservableCollection<NPC>
+                {
+                    NpcById(2005)
+                }
             };
 
             return gameMap;
@@ -496,6 +512,7 @@ namespace Subterra_Quest_Game.DataLayer
                 new Food(1001, "Worms", 25, Food.UseActionType.HEALPLAYER, "A pile of slimy wriggling worms. Yum!", 50 ,"They wiggle all the way down", "Images/unknownItem.jpg"),
                 new Food(1002, "GoldWorms", 100, Food.UseActionType.HEALPLAYER, "A glittering golden pile of worms. So shiny!", 100, "Not bad!", "Images/unknownItem.jpg"),
                 new Food(1003, "Carrot", 40, Food.UseActionType.HEALPLAYER, "Bright orange and crunchy", 75, "hits the spot","Images/unknownItem,jpg"),
+                new Food(1004, "Cabbage", 50, Food.UseActionType.HEALPLAYER, "Leafy Greens", 75, "I can taste the vitamines","Images/unknownItem,jpg"),
                 new RareItem(2001, "Antlers of Jackalope", 1000, RareItem.RareList.Antlers, "Dangerous looking sharp pointy antlers fitted to a helmet.", 300, "You equip the helmet. Perfect fit and ready for battle!","Images/unknownItem,jpg"),
                 new RareItem(2002, "Mole Hair", 500, RareItem.RareList.MoleHair, "Fuzzy patch of hair", 100, "\n Mole City is now Unlocked!", "Images/unknownItem.jpg"),
                 new RareItem(2003, "Rabbit's Foot",1000, RareItem.RareList.RabbitFoot, "Looks used", 200,"You can now enter Bunny Burrow!", "Images/unknownItem.jpg"),
@@ -515,15 +532,15 @@ namespace Subterra_Quest_Game.DataLayer
                   ID = 2001,
                   Name = "Slimy Worm",
                   Race = Character.RaceType.Worm,
-                  LocationId= 3,
+                  LocationId= 15,
                   Health =5,
                   Description = "A slimy, squirmy, wriggling worm. Seems mostly harmless",
                   SkillLevel = 5,
                   Messages = new List<string>()
                   {
-                    "The worm lunges at you",
-                    "The worm wriggles around",
-                    "Gross! stop that worm!"
+                    "\nThe worm lunges at you",
+                    "\nThe worm wriggles around",
+                    "\nGross! stop that worm!"
 
                   }
                },
@@ -532,15 +549,68 @@ namespace Subterra_Quest_Game.DataLayer
                   ID = 2002,
                   Name = "Huge Worm",
                   Race = Character.RaceType.Worm,
-                  LocationId= 4,
-                  Health =15,
+                  LocationId= 50,
+                  Health =25,
                   Description = "An extra large worm \n Like... really big.",
-                  SkillLevel = 10,
+                  SkillLevel = 7,
                   Messages = new List<string>()
                   {
-                    "The worm bites at you! \n It has teeth!?",
-                    "The worm lets out a terrible scream",
-                    "It charges at you!"
+                    "\nThe worm bites at you! \n It has teeth!?",
+                    "\nThe worm lets out a terrible scream",
+                    "\nIt charges at you!"
+
+                  }
+               },
+
+                new Monster()
+               {
+                  ID = 2003,
+                  Name = "Battle Bunny",
+                  Race = Character.RaceType.Bunny,
+                  LocationId= 35,
+                  Health =35,
+                  Description = "Bunny with Boxing gloves on \n He want's to fight",
+                  SkillLevel = 9,
+                  Messages = new List<string>()
+                  {
+                    "\nLets Box! \n If you win I'll give you exp!",
+                    "\nC'mon, a couple of bruises wont hurt you!",
+                    "\nIt's good practice! \n You never know when the Gardner is going to chase you."
+                  }
+               },
+
+               new Monster()
+               {
+                  ID = 2005,
+                  Name = "Gardner",
+                  Race = Character.RaceType.Gardner,
+                  LocationId= 150,
+                  Health =100,
+                  Description = "A mean looking Gardner.\n He doesn't like intruders",
+                  SkillLevel = 20,
+                  Messages = new List<string>()
+                  {
+                    "\nShoo, SHOO! \n He shakes his rake at you!",
+                    "\nGet out of my garden!",
+                    "\nPest!"
+
+                  }
+               },
+
+                new Monster()
+               {
+                  ID = 2004,
+                  Name = "Geode Monster",
+                  Race = Character.RaceType.Geode,
+                  LocationId= 100,
+                  Health =75,
+                  Description = "A Geode Monster. \n Sharp and pointy.",
+                  SkillLevel = 15,
+                  Messages = new List<string>()
+                  {
+                    "\n The Monster sparkles and chimes. \n Is it yelling?",
+                    "\n The Geode shines a ray of light at your face! \n It's too bright!",
+                    "\n He charges towards you!"
 
                   }
                },
@@ -553,7 +623,7 @@ namespace Subterra_Quest_Game.DataLayer
                   Description = "Speak to me for game instructions",
                   Messages = new List<string>()
                   {
-                   "Press the 'Enter Underground' to begin the game." +
+                   "\nPress the 'Enter Underground' to begin the game." +
                    "\n You will be transformed into a beetle." +
                    "\n Fight your way through the map changing forms until"+
                    "\n you reach the final boss.",
@@ -594,9 +664,9 @@ namespace Subterra_Quest_Game.DataLayer
                   Description = "Shadowy figure",
                   Messages = new List<string>()
                   {
-                   "Excuse me, but are you looking for something.",
-                   "You requre a special item to pass",
-                   "Have you seen a small patch of fur?"
+                   "\nExcuse me, but are you looking for something.",
+                   "\nYou requre a special item to pass",
+                   "\nHave you seen a small patch of fur?"
                   }
                },
 
@@ -608,9 +678,9 @@ namespace Subterra_Quest_Game.DataLayer
                    Description = "Shadowy figure",
                    Messages = new List<string>()
                    {
-                    "Excuse me, but are you looking for something.",
-                    "You requre a special item to pass",
-                    "I've lost my lucky rabbits foot"
+                    "\nExcuse me, but are you looking for something.",
+                    "\nYou requre a special item to pass",
+                    "\nI've lost my lucky rabbits foot"
                    }
                },
                   new Citizen()
@@ -621,8 +691,8 @@ namespace Subterra_Quest_Game.DataLayer
                    Description = "Shadowy figure",
                    Messages = new List<string>()
                    {
-                    "It's much to dangerous. Turn Around",
-                    "You can't battle the boss without a helmet!"
+                    "\nIt's much to dangerous. Turn Around",
+                    "\nYou can't battle the boss without a helmet!"
                    }
                }
            };

@@ -34,6 +34,7 @@ namespace Subterra_Quest_Game.BusinessLayer
             _player.Defense = GameData.PlayerData().Defense;
             _player.Strength = GameData.PlayerData().Strength;
             _player.Color = GameData.PlayerData().Color;
+            _messages = GameData.InitialMessages();
 
             _loginView.ShowDialog();
              InitializeDataSet();
@@ -49,9 +50,10 @@ namespace Subterra_Quest_Game.BusinessLayer
             _player.SkillLevel = GameData.PlayerData().SkillLevel;
             _player.Quests = GameData.PlayerData().Quests;
             _player.NpcsEngaged = GameData.PlayerData().NpcsEngaged;
-            
+            _messages = GameData.InitialMessages();
 
-           
+
+
 
         }
         private void ShowGameInterface()
